@@ -83,14 +83,12 @@ init_pm: ; In protected mode now
     mov gs, ax
 
     mov ebp, 0x90000
-    mov esp, ebp
-
-    call PM ; Start executing protected mode code
-
-[bits 32]
+    mov esp, ebp    
+    call PM
+    
+; Start executing protected mode code
 PM:
-    call KERNEL_ADDRESS
-    hlt
+    jmp KERNEL_ADDRESS
 
 ; Padding 
     times 510-($-$$) db 0 

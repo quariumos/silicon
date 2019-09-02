@@ -1,7 +1,12 @@
 
+#include <core/irq.h>
 
-void main()
+void kmain()
 {
-    for(;;)
-        ;
+    idt_init();
+    out_byte(0x21, 0xfd);
+    out_byte(0xa1, 0xff);
+    asm("sti");
+    for (;;)
+        asm("hlt");
 }
