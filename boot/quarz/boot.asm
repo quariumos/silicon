@@ -6,7 +6,6 @@ KERNEL_ADDRESS equ 0x2000
 xor ax, ax
 mov ds, ax
 cld 
-
     ; Reset video mode
     mov ah, 00h
     mov al, 3
@@ -22,14 +21,10 @@ cld
     mov bx, KERNEL_ADDRESS    ; es:bx(0x0000:0x8000) forms complete address to read sectors to
     int 0x13          ; Make BIOS disk services call (int 0x13/ah=2) to read sectors
 
-; Load in protected mode
-hang:
     ; Try enabling A20 line, this does not guarantee anything though
     in al,0xee
 
-    call pm
-    hlt ; never executed
-
+    jmp init_pm
 
 start_gdt: ; don't remove the labels, they're needed to compute sizes and jumps
     ; the GDT starts with a null 8-byte
@@ -65,30 +60,19 @@ CODE equ code - start_gdt
 DATA equ data - start_gdt
 
 [bits 16]
-pm:
+init_pm:
     cli ; Disable all interrupts
     lgdt [gdt_desc] ; Load the GDT
     mov eax, cr0
     or eax, 0x1 ; Get to protected mode
     mov cr0, eax
-    jmp CODE:init_pm
+    jmp CODE:pm
 
-[bits 32]
-init_pm: ; In protected mode now
-    mov ax, DATA
-    mov ds, ax
-    mov ss, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
-
-    mov ebp, 0x90000
-    mov esp, ebp    
-    call PM
+    hlt ; never executed
     
-; Start executing protected mode code
-PM:
-    jmp KERNEL_ADDRESS
+[bits 32]
+pm: ; In protected mode now
+    call KERNEL_ADDRESS
 
 ; Padding 
     times 510-($-$$) db 0 

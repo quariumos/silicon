@@ -1,16 +1,17 @@
 
-CC= tcc
+CC= gcc
 KERNEL_START= 0x2000
 BOOTLOADER= quarz
 
 INCLUDE= include/
 
-CFLAGS= -ffreestanding -I${INCLUDE} -m32 -masm=intel
+EMUFLAGS= -d int -net none -m 1G -fda
+CFLAGS= -ffreestanding -I${INCLUDE} -m32 -Wno-attributes
 LDFLAGS= -m elf_i386 -nostdlib -Ttext ${KERNEL_START}
 NAME= quar
 
 run: ${NAME}.iso
-	qemu-system-i386 -net none -m 1G -fda $<
+	qemu-system-i386 ${EMUFLAGS} $<
 
 quar.iso: ${BOOTLOADER} ${NAME}.tmp
 	cat $^ > $@
