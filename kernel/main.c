@@ -1,16 +1,17 @@
 
 #include <core/def.h>
+#include <core/tables/idt.h>
 #include <core/screen/print.h>
 
 void kmain()
 {
     // I'm just testing here, ignore it
-    u16 smoothgrey = color(WHITE, GREY);
-    u16 clearwhite = color(WHITE, BLACK);
+    asm("cli");
+    idt_init();
+    outb(0x21, 0xfd);
+    outb(0xa1, 0xff);
+    asm("sti");
     screen(VIDEO_MEMORY);
-    kprint("<n>th line", smoothgrey);
-    nline();
-    kprint("<n+1>th line", smoothgrey);
     for (;;)
         asm("hlt");
 }
