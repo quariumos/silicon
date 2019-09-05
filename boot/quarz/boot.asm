@@ -1,5 +1,5 @@
 ; Define values
-KERNEL_SIZE equ 16
+KERNEL_SIZE equ 28
 KERNEL_ADDRESS equ 0x1000
 ; Set up the offset
 [org 0x7c00]

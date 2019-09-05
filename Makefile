@@ -1,5 +1,6 @@
 
-CC= gcc
+CC= clang
+ACC= gcc
 KERNEL_START= 0x2000
 BOOTLOADER= quarz
 
@@ -21,9 +22,9 @@ ${BOOTLOADER}: clean
 
 ${NAME}.tmp:
 	nasm -f elf include/core/def.asm -o def.o
-	${CC} ${CFLAGS} -o entry.o -c kernel/entry.c
+	${ACC} ${CFLAGS} -o entry.o -c kernel/entry.c
 	${CC} ${CFLAGS} -o ${NAME}.o -c kernel/main.c
-	ld ${LDFLAGS} -o $@ entry.o def.o ${NAME}.o
+	ld ${LDFLAGS} -o $@ entry.o ${NAME}.o def.o 
 
 clean:
 	rm -rf *.iso *.o *.tmp ${BOOTLOADER}
