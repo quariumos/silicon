@@ -3,7 +3,7 @@
 
 #include <core/def.h>
 
-u8 strlen(u8 *string)
+u8 strlen(s8 *string)
 {
     u8 i = 0;
     while (string[i] != 0)
@@ -35,4 +35,15 @@ s32 atoi(char *str)
     }
     return (num * neg);
 }
+
+s8 *_dec(u32 x, s8 *s)
+{
+    *--s = 0; // Set end to 0
+    if (!x) // If equal to 0
+        *--s = '0'; // Set end to '0'
+    for (; x; x /= 10) // Else, iterate until 0
+        *--s = '0' + x % 10; // Convert x->s[n] (s[n] = x mod base + 48('0' ASCII))
+    return s;
+}
+
 #endif

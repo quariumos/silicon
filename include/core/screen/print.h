@@ -26,7 +26,7 @@ void nline()
     vid_ptr_x = 0;
 }
 
-void kprint(u8 *s, u16 color)
+void kprint(char *s, u16 color)
 {
     u32 l = strlen(s), j = 0;
     volatile u16 *a = address(vid_ptr_x, vid_ptr_y);
@@ -34,7 +34,7 @@ void kprint(u8 *s, u16 color)
     {
         character(s[j], color, a);
         j++;
-        if (j / VGA_WIDTH == 1)
+        if (j % VGA_WIDTH == 0)
             vid_ptr_y += 1, vid_ptr_x = 0;
         else
             vid_ptr_x += 1;

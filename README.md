@@ -1,6 +1,6 @@
 # Silicon
 This repository contains all the code for the QuariumOS kernel, Silicon.
-QuariumOS should be located in another repository somewhere in this organization, but it will be likely be so only when the kernel is in it's alpha.
+QuariumOS should be located in another repository somewhere in this organization, but it will likely be so only when the kernel is in it's alpha stage.
 ## What you can use it for:
 Once it actually gets to be something you want to use, feel free to:
 1. Make cool embedded stuff with it
