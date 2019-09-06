@@ -26,9 +26,9 @@ void kmain()
     screen(VIDEO_MEMORY);
     register_isr(33, kb_handler);
     // Generic handler stubs for exceptions, for now
-    for (u32 i = 0; i < 15; i++)
+    for (u32 i = 0; i < 14; i++)
     {
-        register_isr(1, generic_exception_handler);
+        register_isr(i, generic_exception_handler);
     }
     for (;;)
         asm("hlt");
