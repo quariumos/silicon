@@ -8,8 +8,14 @@ Once it actually gets to be something you want to use, feel free to:
 3. Or make it a base for your own kernel
 
 ## Progress:
-v0.l:
+v0.1:
 1. Text mode driver for debugging, stub for keyboard driver / done
 2. Proper IDT / done
-4. Very simplistic bootloader / done
-3. Exception handling / WIP
+3. Very simplistic bootloader / done
+4. Serial IO / done
+5. Exception handling / partial, dumped via serial port in DEBUG mode
+6. Kernel, memory allocation / TODO
+
+v0.2:
+1. Module loading / TODO
+2. Kernel Threads / TODO
