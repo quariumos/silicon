@@ -6,9 +6,10 @@ BOOTLOADER= quarz
 
 INCLUDE= include/
 
-EMUFLAGS= -d int -net none -m 1G -fda
+EMUFLAGS= -serial stdio -net none -m 1G -fda
 CFLAGS= -ffreestanding -I${INCLUDE} -m32 -Wno-attributes
 LDFLAGS= -m elf_i386 -nostdlib -Ttext ${KERNEL_START}
+
 NAME= quar
 
 run: ${NAME}.iso

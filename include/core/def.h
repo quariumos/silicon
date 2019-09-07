@@ -40,9 +40,4 @@ void eoi(s32 i)
     outb(0xA0, 0x20);
 }
 
-#ifdef DEBUG
-#include <io/i/keyboard.h>
-#include <io/o/screen/print.h>
-#endif
-
 #endif

@@ -2,6 +2,7 @@
 #define IDT_H
 
 #include <core/def.h>
+#include <core/serial.h>
 
 struct IDT_entry
 {
@@ -63,7 +64,7 @@ void idt()
     outb(0xA1, 0x01);
     outb(0x20, 0x00);
     outb(0xA0, 0x00);
-    
+
     // Exceptions here
     u64 exc0_address = (u64)exc0;
     IDT[0].offset_lowerbits = exc0_address & 0xffff;
@@ -293,6 +294,13 @@ void (*isr_handlers[IDT_SIZE])(u32 vector) = {};
 
 u32 isr_manager(u32 vector)
 {
+    #ifdef DEBUG
+    char s[2];
+    // Send debug info through host terminal/serial console
+    serial_write_string(COM1, "Interrupt occurred. IRQ");
+    serial_write_string(COM1, _dec(vector, s));
+    serial_write(COM1, 10);
+    #endif
     void (*h)(u32 vector) = isr_handlers[vector];
     if (h != NULL)
         h(vector);

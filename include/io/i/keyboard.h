@@ -1,10 +1,10 @@
-#ifdef DEBUG
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
 #include <core/def.h>
 #include <core/sys/idt.h>
-#include "../o/screen/print.h"	
+
+#include <io/o/screen/print.h>
 
 // IRQ vector for keyboard
 #define KEYBOARD_IRQ 33
@@ -23,5 +23,4 @@ void keyboard()
         isr(KEYBOARD_IRQ, kb_handler);
     }
 }
-#endif
 #endif

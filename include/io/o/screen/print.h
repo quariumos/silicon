@@ -1,4 +1,3 @@
-#ifdef DEBUG
 #ifndef PRINT_H
 #define PRINT_H
 
@@ -13,12 +12,6 @@ void nline()
 {
     vid_ptr_y += 1;
     vid_ptr_x = 0;
-}
-
-void resetscreen(u16 x, u16 y)
-{
-    vid_ptr_x = x;
-    vid_ptr_y = y;
 }
 
 void kprintc(u8 c, u16 color)
@@ -44,5 +37,4 @@ void kprint(char *s, u16 color)
     }
 }
 
-#endif
 #endif
