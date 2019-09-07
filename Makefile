@@ -21,10 +21,10 @@ ${BOOTLOADER}: clean
 	nasm boot/${BOOTLOADER}/boot.asm -f bin -o $@
 
 ${NAME}.tmp:
-	nasm -f elf include/core/def.asm -o def.o
+	nasm -f elf include/core/sys/assembly/idt.asm -o idt.o
 	${ACC} ${CFLAGS} -o entry.o -c kernel/entry.c
 	${CC} ${CFLAGS} -o ${NAME}.o -c kernel/main.c
-	ld ${LDFLAGS} -o $@ entry.o ${NAME}.o def.o 
+	ld ${LDFLAGS} -o $@ entry.o ${NAME}.o idt.o 
 
 clean:
 	rm -rf *.iso *.o *.tmp ${BOOTLOADER}

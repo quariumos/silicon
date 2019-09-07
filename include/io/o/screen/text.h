@@ -1,3 +1,4 @@
+#ifdef DEBUG
 #ifndef TEXT_H
 #define TEXT_H
 
@@ -7,6 +8,7 @@
 #define VIDEO_MEMORY 0xB8000
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
+#define VIDEO_MEMORY_SIZE 4000
 // defintions for all the colors
 #define BLACK 0
 #define BLUE 1
@@ -109,4 +111,5 @@ u16 which(which_type type, volatile u16 *where)
     return (*where | type) >> type;
 }
 
+#endif
 #endif

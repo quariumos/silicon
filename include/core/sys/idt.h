@@ -12,12 +12,10 @@ struct IDT_entry
     unsigned short int offset_higherbits;
 };
 
-#include <core/screen/print.h>
-
 #define IDT_SIZE 256
 struct IDT_entry IDT[IDT_SIZE];
 
-void idt_init()
+void idt()
 {
     extern int exc0();
     extern int exc1();
@@ -63,9 +61,9 @@ void idt_init()
     outb(0xA1, 0x02);
     outb(0x21, 0x01);
     outb(0xA1, 0x01);
-    outb(0x21, 0x0);
-    outb(0xA1, 0x0);
-
+    outb(0x20, 0x00);
+    outb(0xA0, 0x00);
+    
     // Exceptions here
     u64 exc0_address = (u64)exc0;
     IDT[0].offset_lowerbits = exc0_address & 0xffff;
@@ -291,23 +289,26 @@ void idt_init()
     load_idt(idt_ptr);
 }
 
-void(*isr_handlers[IDT_SIZE])(u32 vector) = {};
+void (*isr_handlers[IDT_SIZE])(u32 vector) = {};
 
 u32 isr_manager(u32 vector)
 {
     void (*h)(u32 vector) = isr_handlers[vector];
     if (h != NULL)
         h(vector);
-    else
-        kprint("No handler provided", color(WHITE, BLACK));
     if (vector > 14)
         eoi(vector);
     return 0;
 }
 
-void register_isr(u32 vector, void (*handler)(u32 vector))
+void isr(u32 vector, void (*handler)(u32 vector))
 {
     isr_handlers[vector] = handler;
 }
 
+s8 has_isr(u32 vector)
+{
+    void (*h)(u32 vector) = isr_handlers[vector];
+    return h != NULL;
+}
 #endif

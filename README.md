@@ -6,3 +6,10 @@ Once it actually gets to be something you want to use, feel free to:
 1. Make cool embedded stuff with it
 2. Use it as kernel for your own OS
 3. Or make it a base for your own kernel
+
+## Progress:
+v0.l:
+1. Text mode driver for debugging, stub for keyboard driver / done
+2. Proper IDT / done
+4. Very simplistic bootloader / done
+3. Exception handling / WIP

@@ -10,6 +10,9 @@ typedef short s16;
 typedef unsigned char u8;
 typedef char s8;
 
+typedef u64 size_t;
+typedef u64 uintptr_t;
+
 #define NULL (void *)0
 
 // Read a byte from the port specified
@@ -36,5 +39,10 @@ void eoi(s32 i)
         outb(0x20, 0x20);
     outb(0xA0, 0x20);
 }
+
+#ifdef DEBUG
+#include <io/i/keyboard.h>
+#include <io/o/screen/print.h>
+#endif
 
 #endif
