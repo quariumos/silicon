@@ -35,5 +35,19 @@ void *memcpy(u8 *src, u8 *dst, u32 size)
     return dst;
 }
 
+#define MEM_LOC 0x2000
 
+u32 free_addr = MEM_LOC;
+
+typedef enum
+{
+    MEM_FREE,
+    MEM_TAKEN,
+    MEM_BAD
+}MEM_HEADER;
+
+void *malloc(size_t size)
+{
+    
+}
 #endif

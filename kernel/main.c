@@ -11,10 +11,13 @@
 #include <io/o/screen/print.h>
 #endif
 
+
+
 // Kernel will only provide(once it's ready to) IPC/Messaging, Memory allocation interface and a basic text mode + keyboard drivers
 // All other functionality will be modular, as in modular kernels and microkernels
 void kmain()
 {
+    u8 keyboard_buffer;
     idt();
     // Generic handler stubs for exceptions, for now
     for (u32 i = 0; i < 14; i++)
@@ -28,6 +31,8 @@ void kmain()
 #endif
 #ifdef DEBUG
     serial(COM1); // Enable serial port 1
+    serial_write_string(COM1, "Kernel Booted.");
+    serial_write(COM1, 10);
 #endif
     for (;;)
         asm("hlt");
