@@ -1,5 +1,6 @@
 
 #define DEBUG
+#define KIO
 
 #include <core/def.h>
 #include <core/sys/idt.h>

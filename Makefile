@@ -12,8 +12,8 @@ LDFLAGS= -m elf_i386 -nostdlib -Ttext ${KERNEL_START}
 
 NAME= quar
 
-run: ${NAME}.iso
-	qemu-system-i386 ${EMUFLAGS} $<
+run: clean ${NAME}.iso
+	qemu-system-i386 ${EMUFLAGS} ${NAME}.iso
 
 quar.iso: ${BOOTLOADER} ${NAME}.tmp
 	cat $^ > $@
@@ -21,11 +21,17 @@ quar.iso: ${BOOTLOADER} ${NAME}.tmp
 ${BOOTLOADER}: clean
 	nasm boot/${BOOTLOADER}/boot.asm -f bin -o $@
 
-${NAME}.tmp:
-	nasm -f elf include/core/sys/assembly/idt.asm -o idt.o
+entry.o:
 	${ACC} ${CFLAGS} -o entry.o -c kernel/entry.c
-	${CC} ${CFLAGS} -o ${NAME}.o -c kernel/main.c
-	ld ${LDFLAGS} -o $@ entry.o ${NAME}.o idt.o 
+
+kernel.o:
+	${CC} ${CFLAGS} -o $@ -c kernel/main.c
+
+x86.o:
+	nasm -f elf include/core/sys/assembly/x86.asm -o $@
+
+${NAME}.tmp: entry.o kernel.o x86.o
+	ld ${LDFLAGS} -o $@ $^
 
 clean:
 	rm -rf *.iso *.o *.tmp ${BOOTLOADER}
