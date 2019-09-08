@@ -15,7 +15,7 @@ NAME= quar
 run: clean ${NAME}.iso
 	qemu-system-i386 ${EMUFLAGS} ${NAME}.iso
 
-quar.iso: ${BOOTLOADER} ${NAME}.tmp
+quar.iso: ${BOOTLOADER} ${NAME}
 	cat $^ > $@
 
 ${BOOTLOADER}: clean
@@ -30,8 +30,8 @@ kernel.o:
 x86.o:
 	nasm -f elf include/sys/assembly/x86.asm -o $@
 
-${NAME}.tmp: entry.o kernel.o x86.o
+${NAME}: entry.o kernel.o x86.o
 	ld ${LDFLAGS} -o $@ $^
 
 clean:
-	rm -rf *.iso *.o *.tmp ${BOOTLOADER}
+	rm -rf *.iso *.o *.tmp ${NAME} ${BOOTLOADER}
