@@ -2,7 +2,7 @@
 #define MATH_H
 // Not complete at all
 
-#include <core/def.h>
+#include <def.def.h>
 
 u32 floor(u32 n)
 {

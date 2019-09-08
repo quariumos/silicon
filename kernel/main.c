@@ -2,9 +2,9 @@
 #define DEBUG
 #define KIO
 
-#include <core/def.h>
-#include <core/sys/idt.h>
-#include <core/sys/exc.h>
+#include <def/def.h>
+#include <sys/idt.h>
+#include <sys/exc.h>
 
 #ifdef KIO
 #include <io/i/keyboard.h>

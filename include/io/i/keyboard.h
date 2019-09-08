@@ -1,8 +1,8 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
-#include <core/def.h>
-#include <core/sys/idt.h>
+#include <def/def.h>
+#include <sys/idt.h>
 
 #include <io/o/screen/print.h>
 

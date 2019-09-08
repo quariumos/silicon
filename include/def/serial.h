@@ -1,8 +1,8 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
-#include <core/def.h>
-#include <core/std.h>
+#include <def/def.h>
+#include <def/std.h>
 
 #define COM1 0x3f8
 

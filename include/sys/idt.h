@@ -1,8 +1,8 @@
 #ifndef IDT_H
 #define IDT_H
 
-#include <core/def.h>
-#include <core/serial.h>
+#include <def/def.h>
+#include <def/serial.h>
 
 struct IDT_entry
 {

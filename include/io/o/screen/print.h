@@ -1,8 +1,8 @@
 #ifndef PRINT_H
 #define PRINT_H
 
-#include <core/def.h>
-#include <core/std.h>
+#include <def/def.h>
+#include <def/std.h>
 
 #include "./text.h"
 

@@ -1,7 +1,7 @@
 #ifndef MEM_H
 #define MEM_H
 
-#include <core/def.h>
+#include <def/def.h>
 
 void *memmove(u8 *src, u8 *dst, u32 size)
 {

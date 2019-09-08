@@ -28,7 +28,7 @@ kernel.o:
 	${CC} ${CFLAGS} -o $@ -c kernel/main.c
 
 x86.o:
-	nasm -f elf include/core/sys/assembly/x86.asm -o $@
+	nasm -f elf include/sys/assembly/x86.asm -o $@
 
 ${NAME}.tmp: entry.o kernel.o x86.o
 	ld ${LDFLAGS} -o $@ $^

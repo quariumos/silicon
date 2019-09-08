@@ -1,10 +1,10 @@
 #ifndef EXC_H
 #define EXC_H
 
-#include <core/def.h>
+#include <def/def.h>
 
 #ifdef DEBUG
-#include <core/serial.h>
+#include <def/serial.h>
 // When in DEBUG mode it uses serial port
 void generic_exception_handler(u32 vector)
 {

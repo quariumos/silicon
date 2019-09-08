@@ -1,7 +1,7 @@
 #ifndef STD_H
 #define STD_H
 
-#include <core/def.h>
+#include <def/def.h>
 
 u8 strlen(s8 *string)
 {

@@ -2,7 +2,7 @@
 #ifndef TEXT_H
 #define TEXT_H
 
-#include <core/def.h>
+#include <def/def.h>
 
 // video memory pointer, obviously
 #define VIDEO_MEMORY 0xB8000
