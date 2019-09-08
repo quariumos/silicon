@@ -1,6 +1,6 @@
 extern void kmain();
 
-int _start()
+void _start()
 {
     kmain();
 }

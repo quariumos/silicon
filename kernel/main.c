@@ -11,6 +11,11 @@
 #include <io/o/screen/print.h>
 #endif
 
+// Only for test
+void on_input(u8 value)
+{
+    kprintc(value, color(WHITE, BLACK));
+}
 
 
 // Kernel will only provide(once it's ready to) IPC/Messaging, Memory allocation interface and a basic text mode + keyboard drivers
@@ -27,7 +32,7 @@ void kmain()
     asm("sti");
 #ifdef KIO
     screen(VIDEO_MEMORY);
-    keyboard();
+    keyboard(on_input);
 #endif
 #ifdef DEBUG
     serial(COM1); // Enable serial port 1
