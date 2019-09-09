@@ -13,9 +13,11 @@ v0.1:
 2. Proper IDT / done
 3. Very simplistic bootloader / done
 4. Serial IO / done
-5. Exception handling / partial, dumped via serial port in DEBUG mode
+5. Exception handling / done / dumped via serial port in DEBUG mode
 6. Kernel, memory allocation / TODO
 
 v0.2:
 1. Module loading / TODO
 2. Kernel Threads / TODO
+3. VFS / TODO
+4. Executable parsing

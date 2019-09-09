@@ -2,12 +2,11 @@
 #define PRINT_H
 
 #include <def/def.h>
-#include <def/std.h>
 
-#include "./text.h"
+#include "./vid.h"
+#include "./crsr.h"
 
-u16 vid_ptr_x = 0;
-u16 vid_ptr_y = 0;
+u16 vid_ptr_x = 0, vid_ptr_y = 0;
 void nline()
 {
     vid_ptr_y += 1;
@@ -18,7 +17,9 @@ void kprintc(u8 c, u16 color)
 {
     if (vid_ptr_y > VGA_HEIGHT)
         vid_ptr_y = 0, vid_ptr_x = 0;
-    character(c, color, address(vid_ptr_x, vid_ptr_y));
+    volatile u16 *a = vid_address_get(vid_ptr_x, vid_ptr_y);
+    vid_character_set(c, color, a);
+    vid_cursor_move(vid_ptr_x, vid_ptr_y);
     if (vid_ptr_x < VGA_WIDTH)
         vid_ptr_x += 1;
     else
@@ -30,10 +31,11 @@ void kprintc(u8 c, u16 color)
 
 void kprint(char *s, u16 color)
 {
-    u32 l = strlen(s);
-    for (u32 i = 0; i < l; i++)
+    s8 i = 0;
+    while (s[i] != 0)
     {
         kprintc(s[i], color);
+        i++;
     }
 }
 

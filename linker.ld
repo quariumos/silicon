@@ -1,25 +1,29 @@
 
-ENTRY(kmain)
+ENTRY(_start)
  
 SECTIONS
 {
-
-	. = 0x1000;
-
-	.text BLOCK(0x2000) : ALIGN(4K)
+	. = 1M;
+ 
+	.text BLOCK(4K) : ALIGN(4K)
 	{
+		*(.multiboot)
 		*(.text)
 	}
  
-	.data BLOCK(0x3000) : ALIGN(4K)
+	.rodata BLOCK(4K) : ALIGN(4K)
+	{
+		*(.rodata)
+	}
+ 
+	.data BLOCK(4K) : ALIGN(4K)
 	{
 		*(.data)
 	}
  
-	.bss BLOCK(0x4000) : ALIGN(4K)
+	.bss BLOCK(4K) : ALIGN(4K)
 	{
 		*(COMMON)
 		*(.bss)
 	}
-
 }

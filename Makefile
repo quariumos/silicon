@@ -1,37 +1,34 @@
 
-CC= clang
-ACC= gcc
+CC= clang-3.9
+AS= nasm
+
 BOOTLOADER= quarz
 
-INCLUDE= include/
+TARGET= i386-pc-none-bin
 
-EMUFLAGS= -serial stdio -net none -m 1G -fda
-CFLAGS= -ffreestanding -I${INCLUDE} -m32 -Wno-attributes
-LDFLAGS= -m elf_i386 -nostdlib -T linker.ld
-
-NAME= quar
+CF= -nostdlib -ffreestanding -Isrc/inc -target ${TARGET}
+EF= -serial stdio -net none -m 1G
+NAME= sil
 
 run: clean ${NAME}.iso
-	qemu-system-i386 ${EMUFLAGS} ${NAME}.iso
+	qemu-system-i386 ${EF} -cdrom ${NAME}.iso
 
-${NAME}.iso: ${BOOTLOADER} ${NAME}
-	rm -rf ${NAME}.iso
-	cat $^ > $@
+${NAME}.iso: ${NAME}.bin
+	cp $< iso/boot/kernel.bin
+	grub-mkrescue -o $@ iso
 
-${BOOTLOADER}: clean
-	nasm boot/${BOOTLOADER}/x86.asm -f bin -o $@
+${NAME}.bin: bootg.o kernel.o
+	${CC} -T linker.ld -o $@ ${CF} $^
 
-entry.o:
-	${ACC} ${CFLAGS} -o entry.o -c kernel/entry.c
+bootg.o:
+	nasm -f elf32 src/bootg.asm -o bootg.o
 
 kernel.o:
-	${CC} ${CFLAGS} -o $@ -c kernel/main.c
+	${CC} ${CF} src/main.c -c -o $@
 
-x86.o:
-	nasm -f elf include/sys/asm/x86.asm -o $@
-
-${NAME}: entry.o kernel.o x86.o
-	ld ${LDFLAGS} -o $@ $^
+check: ${NAME}.bin
+	if grub-file --is-x86-multiboot ${NAME}.bin; then echo IS Multiboot; else echo IS not multiboot; fi
 
 clean:
-	rm -rf *.o *.tmp *.iso ${NAME} ${BOOTLOADER}
+	rm -rf iso/boot/kernel.bin
+	rm -rf *.bin *.o

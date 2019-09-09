@@ -33,11 +33,4 @@ void outb(u16 port, u8 data)
             : "a"(data), "d"(port));
 }
 
-void eoi(s32 i)
-{
-    if (i <= 7)
-        outb(0x20, 0x20);
-    outb(0xA0, 0x20);
-}
-
 #endif
