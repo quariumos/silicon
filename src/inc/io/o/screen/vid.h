@@ -32,15 +32,9 @@ typedef enum
     CHARACTER = 0
 } which_type;
 
-#define NILINIL (volatile u16 *)VIDEO_MEMORY
+#define NILINIL (u16 *)VIDEO_MEMORY
 
-volatile u16 *vid_address_get(u8 x, u8 y)
-{
-    volatile u16 *where = (volatile u16 *)VIDEO_MEMORY + (y * VGA_WIDTH + x);
-    return where;
-}
-
-void vid_character_set(s8 character, u16 color, volatile u16 *where)
+void vid_character_set(s8 character, u16 color, u16 *where)
 {
     *where = character | (color << 8);
 }
@@ -51,7 +45,7 @@ u16 vid_color(u32 fore, u32 back)
     return attr;
 }
 
-u16 vid_which(which_type type, volatile u16 *where)
+u16 vid_which(which_type type, u16 *where)
 {
     return (*where | type) >> type;
 }

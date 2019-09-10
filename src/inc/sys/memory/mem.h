@@ -3,7 +3,7 @@
 
 #include <def/def.h>
 
-void *memmove(u8 *src, u8 *dst, u32 size)
+void *memmove(u8 *dst, u8 *src, u32 size)
 {
     if (dst < src)
         for (u32 i = 0; i < size; i++)
@@ -28,7 +28,13 @@ void *memset(u8 *buf, u32 value, u32 size)
         buf[i] = (unsigned char)value;
     return buf;
 }
-void *memcpy(u8 *src, u8 *dst, u32 size)
+void *memsetw(u16 *buf, u32 value, u32 size)
+{
+    for (u32 i = 0; i < size; i++)
+        buf[i] = (unsigned short)value;
+    return buf;
+}
+void *memcpy(u8 *dst, u8 *src, u32 size)
 {
     for (u32 i = 0; i < size; i++)
         dst[i] = src[i];

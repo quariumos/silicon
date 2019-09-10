@@ -30,6 +30,13 @@ u32 isr_manager(u32 vector)
     void (*h)(u32 vector) = isr_handlers[vector];
     if (h != NULL)
         h(vector);
+    else
+    {
+#ifdef DEBUG
+        serial_write_string(COM1, "No Handler IRQ/EXC");
+        serial_write_string(COM1, _dec(vector));
+#endif
+    }
     outb(0x20, 0x20);
     if (vector > 7)
         outb(0xA0, 0x20);
@@ -45,7 +52,7 @@ struct interrupt_frame
     u64 ss;
 };
 
-void isr(u32 vector, void (*handler)(u32 vector))
+void install_isr(u32 vector, void (*handler)(u32 vector))
 {
     isr_handlers[vector] = handler;
 }
@@ -122,7 +129,7 @@ IRQ(45)
 IRQ(46)
 IRQ(47)
 
-void idt()
+void install_idt()
 {
 
     u64 idt_address;
