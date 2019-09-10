@@ -33,4 +33,22 @@ void outb(u16 port, u8 data)
             : "a"(data), "d"(port));
 }
 
+s8 *_dec(u32 x, s8 *s)
+{
+    *--s = 0; // Set end to 0
+    if (!x) // If equal to 0
+        *--s = '0'; // Set end to '0'
+    for (; x; x /= 10) // Else, iterate until 0
+        *--s = '0' + x % 10; // Convert x->s[n] (s[n] = x mod base + 48('0' ASCII))
+    return s;
+}
+
+u8 _slen(s8 *string)
+{
+    u8 i = 0;
+    while (string[i] != 0)
+        i++;
+    return i;
+}
+
 #endif

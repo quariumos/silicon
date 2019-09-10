@@ -2,7 +2,6 @@
 #define IDT_H
 
 #include <def/def.h>
-#include <def/serial.h>
 
 struct IDT_entry
 {
@@ -33,8 +32,9 @@ u32 isr_manager(u32 vector)
     else
     {
 #ifdef DEBUG
+        char s[2];
         serial_write_string(COM1, "No Handler IRQ/EXC");
-        serial_write_string(COM1, _dec(vector));
+        serial_write_string(COM1, _dec(vector, s));
 #endif
     }
     outb(0x20, 0x20);

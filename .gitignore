@@ -1,6 +1,5 @@
 *.o
 .vscode
 *.tmp
-*.iso
 quar*
 *.bin

@@ -1,13 +1,14 @@
 
 #include <def/def.h>
-#include <sys/int.h>
-#include <sys/exc.h>
+#include <def/serial.h>
 
 #define KIO
 #define DEBUG
 #define INT
 
 #ifdef INT
+#include <sys/int.h>
+#include <sys/exc.h>
 #include <sys/seg.h>
 #endif
 

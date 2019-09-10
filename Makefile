@@ -10,12 +10,8 @@ CF= -nostdlib -ffreestanding -Isrc/inc -target ${TARGET}
 EF= -serial stdio -net none -m 1G
 NAME= sil
 
-run: clean ${NAME}.iso
-	qemu-system-i386 ${EF} -cdrom ${NAME}.iso
-
-${NAME}.iso: ${NAME}.bin
-	cp $< iso/boot/kernel.bin
-	grub-mkrescue -o $@ iso
+run: clean ${NAME}.bin
+	qemu-system-i386 ${EF} -kernel ${NAME}.bin
 
 ${NAME}.bin: bootg.o kernel.o
 	${CC} -T linker.ld -o $@ ${CF} $^

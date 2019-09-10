@@ -2,7 +2,6 @@
 #define SERIAL_H
 
 #include <def/def.h>
-#include <def/std.h>
 
 #define COM1 0x3f8
 
@@ -44,7 +43,7 @@ void serial_write(u32 port, s8 value)
 
 void serial_write_string(u32 port, s8 *string)
 {
-    u32 l = strlen(string);
+    u32 l = _slen(string);
     for (u32 i = 0; i < l; i++)
     {
         serial_write(port, string[i]);
