@@ -7,7 +7,7 @@
 
 u16 vid_ptr_x = 0, vid_ptr_y = 0;
 
-void kprintc(u16 *vid_mem, u8 c, u16 color)
+void kprintc(u16 *mem, u8 c, u16 color)
 {
     switch (c)
     {
@@ -34,7 +34,7 @@ void kprintc(u16 *vid_mem, u8 c, u16 color)
     default:
         if (c >= 32)
         {
-            u16 *where = vid_mem + (vid_ptr_y * 80 + vid_ptr_x);
+            u16 *where = mem + (vid_ptr_y * 80 + vid_ptr_x);
             vid_character_set(c, color, where);
             vid_ptr_x++;
         }
@@ -47,12 +47,12 @@ void kprintc(u16 *vid_mem, u8 c, u16 color)
     vid_cursor_move(vid_ptr_x, vid_ptr_y);
 }
 
-void kprint(u16 *vid_mem, char *s, u16 color)
+void kprint(u16 *mem, char *s, u16 color)
 {
     s8 i = 0;
     while (s[i] != 0)
     {
-        kprintc(vid_mem, s[i], color);
+        kprintc(mem, s[i], color);
         i++;
     }
 }

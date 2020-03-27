@@ -15,7 +15,7 @@ typedef u64 uintptr_t;
 
 #define NULL (void *)0
 
-s8 *_dec(u32 x, s8 *s)
+s8 *_to_decimal(u32 x, s8 *s)
 {
     *--s = 0; // Set end to 0
     if (!x) // If equal to 0
@@ -25,7 +25,7 @@ s8 *_dec(u32 x, s8 *s)
     return s;
 }
 
-u8 _slen(s8 *string)
+u8 _strlen(s8 *string)
 {
     u8 i = 0;
     while (string[i] != 0)

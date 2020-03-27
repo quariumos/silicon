@@ -9,7 +9,7 @@ typedef enum
     EMPTY = 32
 } SERIAL_STATE;
 
-void serial(u32 port)
+void serial_init(u32 port)
 {
     outb(port + 1, 0);    // Disable interrupts
     outb(port + 3, 0x80); // Baud Rate Divisor Setting enabled
@@ -41,7 +41,7 @@ void serial_write(u32 port, s8 value)
 
 void serial_write_string(u32 port, s8 *string)
 {
-    u32 l = _slen(string);
+    u32 l = _strlen(string);
     for (u32 i = 0; i < l; i++)
     {
         serial_write(port, string[i]);
