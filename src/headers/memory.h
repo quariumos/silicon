@@ -1,7 +1,5 @@
-#ifndef MEM_H
-#define MEM_H
-
-#include <def/def.h>
+#pragma once
+#include <types.h>
 
 void *memmove(u8 *dst, u8 *src, u32 size)
 {
@@ -40,4 +38,3 @@ void *memcpy(u8 *dst, u8 *src, u32 size)
         dst[i] = src[i];
     return dst;
 }
-#endif

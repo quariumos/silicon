@@ -1,7 +1,7 @@
 #ifndef VID_H
 #define VID_H
 
-#include <def/def.h>
+#include <types.h>
 
 // Video memory pointer, obviously
 #define VIDEO_MEMORY 0xB8000

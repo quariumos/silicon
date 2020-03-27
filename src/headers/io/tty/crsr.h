@@ -2,7 +2,7 @@
 #ifndef TEXT_H
 #define TEXT_H
 
-#include <def/def.h>
+#include <types.h>
 
 u16 crsr_y = 0, crsr_x = 0;
 

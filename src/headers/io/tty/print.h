@@ -1,9 +1,7 @@
 #ifndef PRINT_H
 #define PRINT_H
 
-#include <def/def.h>
-#include <sys/memory/mem.h>
-
+#include <types.h>
 #include "./vid.h"
 #include "./crsr.h"
 
@@ -59,12 +57,12 @@ void kprint(u16 *vid_mem, char *s, u16 color)
     }
 }
 
-void vid_clear(u16 vid_mem, u16 color)
+void vid_clear(u16* vid_mem, u16 color)
 {
     vid_ptr_x = 0, vid_ptr_y = 0;
     for (u32 i = 0; i < VIDEO_MEMORY_SIZE; i++)
     {
-        vid_character_set(' ', color, vid_mem + i);
+        vid_character_set(' ', color, (vid_mem + i));
     }
 }
 

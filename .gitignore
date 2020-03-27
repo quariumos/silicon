@@ -1,5 +1,4 @@
 *.o
 .vscode
 *.tmp
-quar*
 *.bin

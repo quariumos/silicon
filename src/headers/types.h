@@ -15,24 +15,6 @@ typedef u64 uintptr_t;
 
 #define NULL (void *)0
 
-// Read a byte from the port specified
-u8 inb(u16 port)
-{
-    u8 result;
-    __asm__("in %%dx, %%al"
-            : "=a"(result)
-            : "d"(port));
-    return result;
-}
-
-// Write a byte to the port specified
-void outb(u16 port, u8 data)
-{
-    __asm__("out %%al, %%dx"
-            :
-            : "a"(data), "d"(port));
-}
-
 s8 *_dec(u32 x, s8 *s)
 {
     *--s = 0; // Set end to 0

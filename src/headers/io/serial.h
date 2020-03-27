@@ -1,8 +1,6 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
-#include <def/def.h>
-
 #define COM1 0x3f8
 
 typedef enum

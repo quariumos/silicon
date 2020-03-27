@@ -1,30 +1,24 @@
+_CC=clang
+_ARCH?=i386
+_CLANG_TRIPLE=${_ARCH}-pc-none-bin
 
-CC= clang-3.9
-AS= nasm
+TARGET= ${ARCH}-pc-none-bin
 
-BOOTLOADER= quarz
+_CF= -I src/headers -target ${_CLANG_TRIPLE} -DSILICON_IS_DEBUG_MODE -ffreestanding
+_EF= -serial stdio -net none -m 2M
+NAME= r0
 
-TARGET= i386-pc-none-bin
+run: clean kernel.bin
+	qemu-system-${_ARCH} ${_EF} -kernel kernel.bin
 
-CF= -nostdlib -ffreestanding -Isrc/inc -target ${TARGET}
-EF= -serial stdio -net none -m 1G
-NAME= sil
+kernel.bin: boot.o kernel.o
+	ld -m elf_i386 -T linker.ld -o $@ $^
 
-run: clean ${NAME}.bin
-	qemu-system-i386 ${EF} -kernel ${NAME}.bin
-
-${NAME}.bin: bootg.o kernel.o
-	${CC} -T linker.ld -o $@ ${CF} $^
-
-bootg.o:
-	nasm -f elf32 src/bootg.asm -o bootg.o
+boot.o:
+	nasm -f elf32 iso/boot.asm -o $@
 
 kernel.o:
-	${CC} ${CF} src/main.c -c -o $@
-
-check: ${NAME}.bin
-	if grub-file --is-x86-multiboot ${NAME}.bin; then echo IS Multiboot; else echo IS not multiboot; fi
+	${_CC} -c -o $@ ${_CF} src/main.c
 
 clean:
-	rm -rf iso/boot/kernel.bin
-	rm -rf *.bin *.o
+	rm -rf *.bin *.o *.iso
