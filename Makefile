@@ -15,7 +15,7 @@ kernel.bin: boot.o kernel.o
 	ld -m elf_i386 -T linker.ld -o $@ $^
 
 boot.o:
-	nasm -f elf32 iso/boot.asm -o $@
+	nasm -f elf32 iso/base.asm -o $@
 
 kernel.o:
 	${_CC} -c -o $@ ${_CF} src/main.c
