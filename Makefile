@@ -4,8 +4,8 @@ _CLANG_TRIPLE=${_ARCH}-pc-none-bin
 
 TARGET= ${ARCH}-pc-none-bin
 
-_CF= -I src/headers -target ${_CLANG_TRIPLE} -DSILICON_IS_DEBUG_MODE -ffreestanding
-_EF= -no-reboot -serial stdio -net none -m 2M -d int
+_CF= -I src/headers -target ${_CLANG_TRIPLE} -DSILICON_IS_DEBUG_MODE -ffreestanding -g
+_EF= -no-reboot -net none -m 2M
 NAME= r0
 
 run: clean kernel.iso
@@ -15,10 +15,13 @@ kernel.iso: kernel.bin
 	cp kernel.bin iso/boot
 	grub-mkrescue -d /usr/lib/grub/i386-pc -o $@ iso
 
+irq.o:
+	nasm -f elf32 src/irq.s -o $@
+
 multiboot.o:
 	nasm -f elf32 src/multiboot2.s -o $@
 
-kernel.bin: multiboot.o kernel.o
+kernel.bin: irq.o multiboot.o kernel.o
 	ld -m elf_i386 -T linker.ld -o $@ $^
 
 kernel.o:

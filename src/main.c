@@ -18,11 +18,22 @@
 #include <io/kprint.h>
 #endif
 
+#define EX_IRQ(n) extern void handler_##n();
 
-__attribute__ ((interrupt))
-void stub_interrupt_handler(struct interrupt_frame *frame)
+EX_IRQ(1)
+
+void main_irq_handler(int n)
 {
-    kprint(PRINTF_TEXT, "Interrupt occured\n");
+    switch (n)
+    {
+    case 1:
+        kprint(PRINTF_SERIAL, "Keyboard interrupt");
+        break;
+
+    default:
+        break;
+    }
+    eoi(n);
 }
 
 // Kernel will only provide(once it's ready to) IPC/Messaging, Memory allocation interface and a basic text mode + keyboard drivers
@@ -38,15 +49,13 @@ void kmain()
     // Data segment
     set_gdt_entry(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
     install_gdt(3);
-    for (s32 i = 0; i < 32; ++i)
-    {
-        set_idt_entry(i, stub_interrupt_handler);
-    }
     remap_pic(32, 47);
     install_idt();
+    set_idt_entry(1, handler_1);
     kprint(PRINTF_TEXT, "Silicon Kernel loaded.\n");
-    char *i[6];
-    kprint(PRINTF_TEXT, _to_decimal(sizeof(idt), i));
+    outb(0x21, 0xfd);
+    outb(0xa1, 0xff);
+    asm("sti");
     for (;;)
         asm("hlt");
 }
