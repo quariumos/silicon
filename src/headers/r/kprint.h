@@ -3,10 +3,10 @@
 
 #include <types.h>
 #ifdef IO_PRINT_TEXT
-#include <io/modes/text.h>
+#include <r/modes/text.h>
 #endif
 #ifdef IO_PRINT_SERIAL
-#include <io/modes/serial.h>
+#include <r/modes/serial.h>
 #endif 
 
 u16 text_ptr_x = 0, text_ptr_y = 0;
@@ -76,7 +76,7 @@ void kprintc(u8 c, u32 as)
                 #ifdef IO_PRINT_TEXT
     case PRINTF_TEXT:
         if (text_ptr_y > VGA_HEIGHT)
-            text_scroll(NILINIL, WHITE);
+            text_scroll(NILINIL, default_text_color);
         if (text_ptr_x > VGA_WIDTH)
             text_ptr_x = 0, text_ptr_y++;
         text_cursor_move(text_ptr_x, text_ptr_y);

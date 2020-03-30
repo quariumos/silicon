@@ -50,13 +50,12 @@ u16 text_which(which_type type, u16 *where)
 
 void text_scroll(u16 *vid_text_mem, u16 replace_color)
 {
-    u16 blank = 0x20 | (0x0F << 8);
     // Move the current text chunk back by a line 
     u8 temp = crsr_y - VGA_HEIGHT + 1;
     memcpy((u8*)vid_text_mem, (u8*)(vid_text_mem + temp * VGA_WIDTH), (VGA_HEIGHT - temp) * VGA_WIDTH * 2);
 
     // Set last line to 'blank' character 
-    memsetw(vid_text_mem + (VGA_HEIGHT - temp) * VGA_WIDTH, blank, VGA_WIDTH);
+    memsetw(vid_text_mem + (VGA_HEIGHT - temp) * VGA_WIDTH, replace_color, VGA_WIDTH);
     crsr_y = 25 - 1;
 }
 

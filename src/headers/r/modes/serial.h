@@ -44,15 +44,13 @@ void serial_write(u32 port, s8 value)
 
 void serial_write_string(u32 port, s8 *string)
 {
-    u32 l = _strlen(string);
-    for (u32 i = 0; i < l; i++)
-    {
+    u32 i = 0;
+    while (string[i] != 0)
         serial_write(port, string[i]);
-    }
 }
 
 #ifdef SILICON_IS_DEBUG_MODE
-void dbg(s8* message)
+void dbg(s8 *message)
 {
     serial_write_string(COM1, ">> ");
     serial_write_string(COM1, message);
