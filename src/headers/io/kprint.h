@@ -20,6 +20,8 @@ enum {
     #endif
 };
 
+u16 default_text_color = text_color(BLACK, WHITE);
+
 void kprintc(u8 c, u32 as)
 {
     switch (c)
@@ -39,6 +41,9 @@ void kprintc(u8 c, u32 as)
         break;
     // Newline
     case '\n':
+    #ifdef IO_PRINT_SERIAL
+        serial_write(COM1, '\n');
+    #endif
         text_ptr_x = 0;
         text_ptr_y++;
         break;
@@ -56,7 +61,7 @@ void kprintc(u8 c, u32 as)
                 #endif
                                 #ifdef IO_PRINT_TEXT
             case PRINTF_TEXT:
-                        text_character_set(c, WHITE, NILINIL + (text_ptr_y * 80 + text_ptr_x));
+                        text_character_set(c, default_text_color, NILINIL + (text_ptr_y * 80 + text_ptr_x));
                 break;
                                 #endif
             default:
@@ -79,8 +84,6 @@ void kprintc(u8 c, u32 as)
         break;
                         #ifdef IO_PRINT_SERIAL
     case PRINTF_SERIAL:
-        if (text_ptr_y > VGA_HEIGHT)
-            serial_write_string(COM1, "\n");
     #endif
         break;
     default:
@@ -98,7 +101,7 @@ u8 is_serial_initialized = 0;
 u8 is_text_initialized = 0;
 #endif
 
-void kprint(u32 as, char *s, ...)
+void kprint(u32 as, char *s)
 {
     #ifdef IO_PRINT_SERIAL
     if(is_serial_initialized == 0)
@@ -107,10 +110,8 @@ void kprint(u32 as, char *s, ...)
     #ifdef IO_PRINT_TEXT
 if(is_text_initialized == 0)
     {
-    u16 whitefore = text_color(WHITE, BLACK);
-    u16 blackfore = text_color(BLACK, WHITE);
     text_cursor_set(15, 15);
-    text_clear(NILINIL, blackfore);
+    text_clear(NILINIL, default_text_color);
         is_text_initialized = 1;
     }
 #endif

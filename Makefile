@@ -5,7 +5,7 @@ _CLANG_TRIPLE=${_ARCH}-pc-none-bin
 TARGET= ${ARCH}-pc-none-bin
 
 _CF= -I src/headers -target ${_CLANG_TRIPLE} -DSILICON_IS_DEBUG_MODE -ffreestanding
-_EF= -no-reboot -serial stdio -net none -m 2M
+_EF= -no-reboot -serial stdio -net none -m 2M -d int
 NAME= r0
 
 run: clean kernel.iso

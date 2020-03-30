@@ -8,7 +8,8 @@
 #define SILICON_INTERRUPTS
 
 #ifdef SILICON_INTERRUPTS
-#include <cpu/idt.h>
+#include <cpu/irq/idt.h>
+#include <cpu/irq/isr.h>
 #endif
 
 #ifdef SILICON_IO
@@ -19,9 +20,9 @@
 
 
 __attribute__ ((interrupt))
-void stub_exception_handler(struct interrupt_frame *frame)
+void stub_interrupt_handler(struct interrupt_frame *frame)
 {
-    kprint(PRINTF_SERIAL, "uh oh, an exception occured\n");
+    kprint(PRINTF_TEXT, "Interrupt occured\n");
 }
 
 // Kernel will only provide(once it's ready to) IPC/Messaging, Memory allocation interface and a basic text mode + keyboard drivers
@@ -36,22 +37,16 @@ void kmain()
 
     // Data segment
     set_gdt_entry(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
-
     install_gdt(3);
     for (s32 i = 0; i < 32; ++i)
     {
-        set_idt_entry(i, stub_exception_handler);
+        set_idt_entry(i, stub_interrupt_handler);
     }
     remap_pic(32, 47);
     install_idt();
-#ifdef SILICON_IO
-#endif
-#ifdef SILICON_INTERRUPTS
-#endif
     kprint(PRINTF_TEXT, "Silicon Kernel loaded.\n");
-#ifdef SILICON_IS_DEBUG_MODE
-    dbg("Kernel loaded");
-#endif
+    char *i[6];
+    kprint(PRINTF_TEXT, _to_decimal(sizeof(idt), i));
     for (;;)
         asm("hlt");
 }

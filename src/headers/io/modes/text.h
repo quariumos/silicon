@@ -35,17 +35,12 @@ typedef enum
 } which_type;
 
 #define NILINIL (u16 *)VIDEO_MEMORY
+#define text_color(f,b) (b << 4) | (f & 0x0F)
 u16 crsr_y = 0, crsr_x = 0;
 
 void text_character_set(s8 character, u16 color, u16 *where)
 {
     *where = character | (color << 8);
-}
-
-u16 text_color(u32 fore, u32 back)
-{
-    u16 attr = (back << 4) | (fore & 0x0F);
-    return attr;
 }
 
 u16 text_which(which_type type, u16 *where)
