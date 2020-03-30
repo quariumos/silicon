@@ -18,7 +18,7 @@ Build requirements:
 v0.1:
 1. Text mode driver for debugging, stub for keyboard driver / done
 2. Proper IDT / done
-3. Very simplistic bootloader / done
+3. Making the kernel loadable / done
 4. Serial IO / done
 5. Exception handling / done / dumped via serial port in DEBUG mode
 6. Kernel, memory allocation / TODO
