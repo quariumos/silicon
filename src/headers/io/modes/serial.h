@@ -1,6 +1,9 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
+#include <types.h>
+#include <cpu/port.h>
+
 #define COM1 0x3f8
 
 typedef enum
@@ -48,5 +51,13 @@ void serial_write_string(u32 port, s8 *string)
     }
 }
 
+#ifdef SILICON_IS_DEBUG_MODE
+void dbg(s8* message)
+{
+    serial_write_string(COM1, ">> ");
+    serial_write_string(COM1, message);
+    serial_write(COM1, 10);
+}
+#endif
 
 #endif

@@ -2,7 +2,6 @@
 #include <types.h>
 #include <memory.h>
 #include <cpu/port.h>
-#include <io/serial.h>
 #include <cpu/gdt.h>
 
 #define SILICON_IO
@@ -13,20 +12,22 @@
 #endif
 
 #ifdef SILICON_IO
-#include <io/tty/print.h>
+#define IO_PRINT_SERIAL
+#define IO_PRINT_TEXT
+#include <io/kprint.h>
 #endif
+
 
 __attribute__ ((interrupt))
 void stub_exception_handler(struct interrupt_frame *frame)
 {
-    serial_write_string(COM1, "uh oh, an exception occured\n");
+    kprint(PRINTF_SERIAL, "uh oh, an exception occured\n");
 }
 
 // Kernel will only provide(once it's ready to) IPC/Messaging, Memory allocation interface and a basic text mode + keyboard drivers
 // All other functionality will be modular, as in modular kernels and microkernels
 void kmain()
 {
-    serial_init(COM1);
     // NULL descriptor
     set_gdt_entry(0, 0, 0, 0, 0);
 
@@ -44,17 +45,12 @@ void kmain()
     remap_pic(32, 47);
     install_idt();
 #ifdef SILICON_IO
-    u16 whitefore = vid_color(WHITE, BLACK);
-    u16 blackfore = vid_color(BLACK, WHITE);
-    vid_cursor_set(15, 15);
-    vid_clear(NILINIL, whitefore);
 #endif
 #ifdef SILICON_INTERRUPTS
 #endif
-    kprint(NILINIL, "Silicon Kernel loaded.\n", whitefore);
+    kprint(PRINTF_TEXT, "Silicon Kernel loaded.\n");
 #ifdef SILICON_IS_DEBUG_MODE
-    serial_write_string(COM1, "Kernel Loaded.");
-    serial_write(COM1, 10);
+    dbg("Kernel loaded");
 #endif
     for (;;)
         asm("hlt");
