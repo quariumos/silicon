@@ -7,6 +7,13 @@ Once it actually gets to be something you want to use, feel free to:
 2. Use it as kernel for your own OS
 3. Or make it a base for your own kernel
 
+## Running the kernel
+Build requirements:
+1. grub-mkrescue and xorisso
+2. clang
+3. ld
+4. nasm
+
 ## Progress:
 v0.1:
 1. Text mode driver for debugging, stub for keyboard driver / done

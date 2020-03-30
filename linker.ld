@@ -1,16 +1,19 @@
 
-ENTRY(_start)
+ENTRY(kmain)
  
 SECTIONS
 {
 	. = 1M;
- 
-	.text BLOCK(4K) : ALIGN(4K)
+
+	.boot :
 	{
 		*(.multiboot)
+	}
+
+	.text :
+	{
 		*(.text)
 	}
- 
 	.rodata BLOCK(4K) : ALIGN(4K)
 	{
 		*(.rodata)
