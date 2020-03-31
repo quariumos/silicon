@@ -21,7 +21,7 @@ typedef struct
     void (*init)();
     in_io_device_t in_device;
     out_io_device_t out_device;
-    char id[6]; // short device identifier used by the kernel, max 5 chars
+    char id[4]; // short device identifier used by the kernel, max 3 chars
 } generic_io_device;
 
 #endif

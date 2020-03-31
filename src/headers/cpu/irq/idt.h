@@ -22,7 +22,7 @@ struct idt_entry {
 #define IDT_SIZE 256
 struct idt_entry idt[IDT_SIZE];
 
-void set_idt_entry(u32 vector, void(*handler)()) {
+void set_idt_entry(u32 vector, void(*handler)(struct interrupt_frame *frame)) {
     u64 handler_address = (u64) handler;
     idt[vector].offset_lowerbits = handler_address & 0xffff;
     idt[vector].selector = 0x08;

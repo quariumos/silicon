@@ -56,9 +56,7 @@ generic_io_device serial =
         .in_device = {
             .flags = 0,
             .stream = &serial_stream},
-        .out_device = {
-            .flags = 0,
-            .write = serial_out
-        }};
+        .out_device = {.flags = 0, .write = serial_out},
+        .id = "SRL"};
 
 #endif
