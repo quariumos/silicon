@@ -28,8 +28,8 @@ typedef struct
     }                                                    \
     void init_##name()                                   \
     {                                                    \
-        static stream_subscriber_t *arr = subscribers; \
-        name.s = &arr;                                   \
+        stream_subscriber_t arr[3] = subscribers; \
+        *name.s = arr;                                   \
         name.write = f_##name;                           \
     }
 #define ARRAY(...)  \
