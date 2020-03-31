@@ -50,8 +50,7 @@ STREAM(keyboard_stream)
 __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_frame *frame)
 {
     u8 scancode = inb(0x60);
-    u8 c = kbdus[scancode];
-    keyboard_stream.write(c);
+    keyboard_stream.write(kbdus[scancode]);
     eoi(1);
 }
 void init_kbd()

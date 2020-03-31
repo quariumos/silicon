@@ -3,6 +3,7 @@
 #include <io/duplex/serial.h>
 #include <io/in/kbd.h>
 #include <io/out/text.h>
+#include <io/conversion.h>
 
 void kbd_log(u8 data)
 {
