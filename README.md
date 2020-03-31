@@ -16,15 +16,17 @@ Build requirements:
 
 ## Progress:
 v0.1:
-1. Text mode driver for debugging, stub for keyboard driver / done
-2. Proper IDT / done
-3. Making the kernel loadable / done
-4. Serial IO / done
-5. Exception handling / done / dumped via serial port in DEBUG mode
-6. Kernel, memory allocation / TODO
+- [x] Text mode driver for debugging
+- [x] Proper IDT
+- [x] Serial IO
+- [x] Fancy virtual device-based IO system
+- [ ] Keyboard driver
+- [ ] Exception handling
+- [ ] Kernel, memory allocation
 
 v0.2:
-1. Module loading / TODO
-2. Kernel Threads / TODO
-3. VFS / TODO
-4. Executable parsing
+- [ ] Kernel Threads
+- [ ] FAT16 support
+
+v0.3
+- [ ] Executable parsing
