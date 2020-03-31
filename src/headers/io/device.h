@@ -7,7 +7,7 @@
 typedef struct
 {
     u16 flags;
-    void(f)(u8 c);
+    void(*f)(u8 c);
 } out_io_device_t;
 
 typedef struct

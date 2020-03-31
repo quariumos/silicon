@@ -28,19 +28,22 @@ typedef enum
 
 STREAM(serial_stream, ARRAY(NOSUB, NOSUB, NOSUB))
 
-void serial_in(u32 port)
+#define DEFAULT_COM_PORT COM1
+
+void serial_in()
 {
-    while (SERIAL_CHECK(port, RECIEVED) == 0)
+    while (SERIAL_CHECK(DEFAULT_COM_PORT, RECIEVED) == 0)
         ;
-    serial_stream.write(inb(port));
+    serial_stream.write(inb(DEFAULT_COM_PORT));
 }
 
-void serial_write(u32 port, s8 value)
+void serial_out(u8 value)
 {
-    while (SERIAL_CHECK(port, EMPTY) == 0)
+    while (SERIAL_CHECK(DEFAULT_COM_PORT, EMPTY) == 0)
         ;
-    outb(port, value);
+    outb(COM1, value);
 }
+
 
 generic_io_device serial =
     {

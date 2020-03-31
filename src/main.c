@@ -1,10 +1,3 @@
-
-#include <types.h>
-#include <memory.h>
-#include <cpu/port.h>
-#include <cpu/irq/idt.h>
-#include <cpu/irq/isr.h>
-
 #define SILICON_IO
 
 #ifdef SILICON_IO
@@ -12,6 +5,9 @@
 #define IO_PRINT_TEXT
 #include <r/kprint.h>
 #endif
+
+#include <cpu/irq/idt.h>
+#include <cpu/irq/isr.h>
 
 __attribute__((interrupt)) void double_fault_handler(struct interrupt_frame *frame)
 {
