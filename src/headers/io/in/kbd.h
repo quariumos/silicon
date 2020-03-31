@@ -1,8 +1,10 @@
 #ifndef DEVICE_KBD_H
 #define DEVICE_KBD_H
 #include <cpu/port.h>
+#if ARCH == i386
 #include <cpu/irq/isr.h>
 #include <cpu/irq/idt.h>
+#endif
 #include <io/device.h>
 // Sample keymap (US layout), taken from a tutorial by Bran
 u8 kbdus[128] =
@@ -54,10 +56,12 @@ __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_fram
 }
 void init_kbd()
 {
+#if ARCH == i386
     init_keyboard_stream(NULL);
     set_idt_entry(33, keyboard_interrupt_handler);
     pic_unmask(1);
     asm("sti");
+#endif
 }
 generic_io_device kbd =
     {

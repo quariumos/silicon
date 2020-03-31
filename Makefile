@@ -1,15 +1,13 @@
 _CC=clang
-_ARCH?=i386
-_CLANG_TRIPLE=${_ARCH}-pc-none-bin
+ARCH?=i386
+_CLANG_TRIPLE=${ARCH}-pc-none-bin
 
-TARGET= ${ARCH}-pc-none-bin
-
-_CF= -I src/headers -target ${_CLANG_TRIPLE} -DSILICON_IS_DEBUG_MODE -ffreestanding -g
+_CF= -I src/headers -target ${_CLANG_TRIPLE} -DARCH=${ARCH} -ffreestanding -g
 _EF= -no-reboot -net none -m 2M -serial stdio
 NAME= r0
 
 run: clean kernel.iso
-	qemu-system-${_ARCH} ${_EF} -cdrom kernel.iso
+	qemu-system-${ARCH} ${_EF} -cdrom kernel.iso
 
 kernel.iso: kernel.bin
 	cp kernel.bin iso/boot

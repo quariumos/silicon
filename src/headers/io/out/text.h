@@ -34,24 +34,22 @@
 #define DEFAULT_TEXT_COLOR TEXT_COLOR(BLACK, WHITE)
 u16 text_y = 0, text_x = 0;
 
-void text_setc(u8 character, u16 color, u16 *where)
+void text_setc(u8 c, u16 color, u32 x, u32 y)
 {
-    *where = character | (color << 8);
+    volatile u16 *where = (volatile u16 *)0xB8000 + (y * 80 + x);
+    *where = c | (color << 8);
 }
 
 void text_outc(u8 c)
 {
-    text_setc(c, DEFAULT_TEXT_COLOR, NILINIL);
+    text_setc(c, DEFAULT_TEXT_COLOR, 0, 0);
 }
 
 void init_text()
 {
-    u16 *ptr = NILINIL - 1;
-    for (u32 i = 0; i < TEXT_FIELD_HEIGHT * TEXT_FIELD_WIDTH; i++)
-    {
-        ptr++;
-        text_setc(' ', DEFAULT_TEXT_COLOR, ptr);
-    }
+    for (u32 y = 0; y < TEXT_FIELD_HEIGHT; y++)
+        for (u32 x = 0; x < TEXT_FIELD_WIDTH; x++)
+            text_setc(' ', DEFAULT_TEXT_COLOR, x, y);
 }
 
 generic_io_device text =
