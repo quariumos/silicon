@@ -1,5 +1,5 @@
-#ifndef SERIAL_H
-#define SERIAL_H
+#ifndef R_SERIAL_H
+#define R_SERIAL_H
 
 #include <types.h>
 #include <cpu/port.h>

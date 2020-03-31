@@ -41,18 +41,24 @@ void serial_out(u8 value)
 {
     while (SERIAL_CHECK(DEFAULT_COM_PORT, EMPTY) == 0)
         ;
-    outb(COM1, value);
+    outb(DEFAULT_COM_PORT, value);
 }
 
+void init_serial()
+{
+    SERIAL_INIT(DEFAULT_COM_PORT);
+    init_serial_stream();
+}
 
 generic_io_device serial =
     {
+        .init = init_serial,
         .in_device = {
             .flags = 0,
-            .stream = serial_stream},
+            .stream = &serial_stream},
         .out_device = {
             .flags = 0,
-            .f = serial_out
+            .write = serial_out
         }};
 
 #endif

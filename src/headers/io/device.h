@@ -7,17 +7,18 @@
 typedef struct
 {
     u16 flags;
-    void(*f)(u8 c);
+    void (*write)(u8 c);
 } out_io_device_t;
 
 typedef struct
 {
     u16 flags;
-    stream_t stream;
+    stream_t *stream;
 } in_io_device_t;
 
 typedef struct
 {
+    void (*init)();
     in_io_device_t in_device;
     out_io_device_t out_device;
     char id[6]; // short device identifier used by the kernel, max 5 chars
