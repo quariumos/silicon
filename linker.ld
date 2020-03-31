@@ -14,6 +14,7 @@ SECTIONS
 	{
 		*(.text)
 	}
+
 	.rodata BLOCK(4K) : ALIGN(4K)
 	{
 		*(.rodata)

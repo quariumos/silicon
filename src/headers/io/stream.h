@@ -16,19 +16,21 @@ typedef struct
     stream_subscriber_t _s;
     // For writing to the stream
     void (*write)(u8);
+    void (*subscribe)(stream_subscriber_t);
 } stream_t;
 
-#define STREAM(name)                                     \
-    static stream_t name;                                \
-    static void f_##name(u8 data)                        \
-    {                                                    \
-        u32 i = -1;                                      \
-        name._s(data);                      \
-    }                                                    \
+#define STREAM(name)                                 \
+    static stream_t name;                            \
+    static void f_##name(u8 data)                    \
+    {                                                \
+        u32 i = -1;                                  \
+        name._s(data);                               \
+    }                                                \
     void init_##name(stream_subscriber_t subscriber) \
-    {                                                    \
-        name._s = subscriber;                            \
-        name.write = f_##name;                           \
+    {                                                \
+        name._s = subscriber;                        \
+        name.write = f_##name;                       \
+        name.subscribe = &init_##name;               \
     }
 #define ARRAY(...)  \
     {               \

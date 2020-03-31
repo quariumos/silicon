@@ -1,5 +1,5 @@
-#ifndef KBD_H
-#define KBD_H
+#ifndef DEVICE_KBD_H
+#define DEVICE_KBD_H
 #include <cpu/port.h>
 #include <cpu/irq/isr.h>
 #include <cpu/irq/idt.h>
@@ -52,13 +52,9 @@ __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_fram
     keyboard_stream.write(c);
     eoi(1);
 }
-void kbd_log(u8 data)
-{
-    serial.out_device.write(data);
-}
 void init_kbd()
 {
-    init_keyboard_stream(kbd_log);
+    init_keyboard_stream(NULL);
     set_idt_entry(33, keyboard_interrupt_handler);
     pic_unmask(1);
     asm("sti");
@@ -69,6 +65,7 @@ generic_io_device kbd =
         .in_device = {
             .flags = 0,
             .stream = &keyboard_stream},
-        .out_device = {.flags = 1}};
+        .out_device = {.flags = 1, .write = NULL},
+        .id = "KBD"};
 
 #endif

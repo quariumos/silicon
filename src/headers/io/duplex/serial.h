@@ -1,5 +1,5 @@
-#ifndef SERIAL_H
-#define SERIAL_H
+#ifndef DEVICE_SERIAL_H
+#define DEVICE_SERIAL_H
 
 #include <types.h>
 #include <cpu/port.h>
@@ -37,11 +37,11 @@ void serial_in()
     serial_stream.write(inb(DEFAULT_COM_PORT));
 }
 
-void serial_out(u8 value)
+void serial_outc(u8 c)
 {
     while (SERIAL_CHECK(DEFAULT_COM_PORT, EMPTY) == 0)
         ;
-    outb(DEFAULT_COM_PORT, value);
+    outb(DEFAULT_COM_PORT, c);
 }
 
 void init_serial()
@@ -56,7 +56,7 @@ generic_io_device serial =
         .in_device = {
             .flags = 0,
             .stream = &serial_stream},
-        .out_device = {.flags = 0, .write = serial_out},
+        .out_device = {.flags = 0, .write = serial_outc},
         .id = "SRL"};
 
 #endif

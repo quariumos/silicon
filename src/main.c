@@ -2,6 +2,13 @@
 
 #include <io/duplex/serial.h>
 #include <io/in/kbd.h>
+#include <io/out/text.h>
+
+void kbd_log(u8 data)
+{
+    serial.out_device.write(data);
+    text.out_device.write(data);
+}
 
 void kmain()
 {
@@ -10,7 +17,8 @@ void kmain()
     // kprint(PRINTF_TEXT, "Silicon Kernel loaded.\n");
     serial.init();
     kbd.init();
-    serial.out_device.write('C');
+    text.init();
+    kbd.in_device.stream->subscribe(kbd_log);
     for (;;)
         asm("hlt");
 }
