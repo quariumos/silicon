@@ -26,7 +26,7 @@ typedef enum
 
 #define SERIAL_CHECK(port, state) (inb(port + 5) & state)
 
-STREAM(serial_stream, ARRAY(NOSUB, NOSUB, NOSUB))
+STREAM(serial_stream)
 
 #define DEFAULT_COM_PORT COM1
 
@@ -47,7 +47,7 @@ void serial_out(u8 value)
 void init_serial()
 {
     SERIAL_INIT(DEFAULT_COM_PORT);
-    init_serial_stream();
+    init_serial_stream(NULL);
 }
 
 generic_io_device serial =

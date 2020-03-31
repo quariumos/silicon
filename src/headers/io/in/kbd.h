@@ -5,7 +5,7 @@
 #include <cpu/irq/idt.h>
 #include <io/device.h>
 // Sample keymap (US layout), taken from a tutorial by Bran
-unsigned char kbdus[128] =
+u8 kbdus[128] =
     {
         0, 27, '1', '2', '3', '4', '5', '6', '7', '8',    /* 9 */
         '9', '0', '-', '=', '\b',                         /* Backspace */
@@ -44,15 +44,21 @@ unsigned char kbdus[128] =
         0, /* F12 Key */
         0, /* All other keys are undefined */
 };
-STREAM(keyboard_stream, ARRAY(NOSUB, NOSUB, NOSUB))
+STREAM(keyboard_stream)
 __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_frame *frame)
 {
     u8 scancode = inb(0x60);
-    serial.out_device.write(kbdus[scancode]);
+    u8 c = kbdus[scancode];
+    keyboard_stream.write(c);
     eoi(1);
+}
+void kbd_log(u8 data)
+{
+    serial.out_device.write(data);
 }
 void init_kbd()
 {
+    init_keyboard_stream(kbd_log);
     set_idt_entry(33, keyboard_interrupt_handler);
     pic_unmask(1);
     asm("sti");
