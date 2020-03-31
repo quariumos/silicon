@@ -32,7 +32,7 @@
 #define NILINIL (u16 *)VIDEO_MEMORY
 #define TEXT_COLOR(f, b) (b << 4) | (f & 0x0F)
 #define DEFAULT_TEXT_COLOR TEXT_COLOR(BLACK, WHITE)
-u16 text_y = 0, text_x = 0;
+u16 text_y = 0, text_x = -1;
 
 void text_setc(u8 c, u16 color, u32 x, u32 y)
 {
@@ -42,7 +42,20 @@ void text_setc(u8 c, u16 color, u32 x, u32 y)
 
 void text_outc(u8 c)
 {
-    text_setc(c, DEFAULT_TEXT_COLOR, 0, 0);
+    text_x++;
+    if (text_x > TEXT_FIELD_WIDTH)
+        text_y++, text_x = 0;
+    switch (c)
+    {
+    case '\n':
+        text_y++;
+        text_x = -1;
+        break;
+    
+    default:
+        text_setc(c, DEFAULT_TEXT_COLOR, text_x, text_y);
+        break;
+    }
 }
 
 void init_text()
