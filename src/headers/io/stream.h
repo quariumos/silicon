@@ -30,7 +30,7 @@ typedef struct
     {                                                \
         name._s = subscriber;                        \
         name.write = f_##name;                       \
-        name.subscribe = &init_##name;               \
+        name.subscribe = init_##name;                     \
     }
 #define ARRAY(...)  \
     {               \

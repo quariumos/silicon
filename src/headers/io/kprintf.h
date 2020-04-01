@@ -17,7 +17,7 @@ void kprintf(out_io_device_t device, const char *format, ...)
         switch (format[ptr])
         {
         case '%':
-            switch (format[ptr++])
+            switch (format[++ptr])
             {
             case '%': // for escaping %
                 device.write('%');

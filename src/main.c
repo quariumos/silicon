@@ -16,12 +16,11 @@ void kmain()
 {
     remap_pic(32, 47);
     install_idt();
-    serial.init();
-    kbd.init();
-    text.init();
+    serial.init(serial.id);
+    kbd.init(kbd.id);
+    text.init(text.id);
     kbd.in_device.stream->subscribe(kbd_log);
     kprintf(text.out_device, ">> Silicon Kernel loaded.\n");
-        kprintf(text.out_device, ">> Silicon Kernel loaded.\n");
     for (;;)
         asm("hlt");
 }

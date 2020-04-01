@@ -44,7 +44,7 @@ void serial_outc(u8 c)
     outb(DEFAULT_COM_PORT, c);
 }
 
-void init_serial()
+void init_serial(char *id)
 {
     SERIAL_INIT(DEFAULT_COM_PORT);
     init_serial_stream(NULL);

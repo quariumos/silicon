@@ -2,8 +2,8 @@ _CC=clang
 ARCH?=i386
 _CLANG_TRIPLE=${ARCH}-pc-none-bin
 
-_CF= -I src/headers -target ${_CLANG_TRIPLE} -DARCH=${ARCH} -ffreestanding -g
-_EF= -no-reboot -net none -m 2M -serial stdio
+_CF= -I src/headers -target ${_CLANG_TRIPLE} -DARCH=${ARCH} -DSILICON_SERIAL_LOG -ffreestanding -g
+_EF= -no-reboot -m 2M -serial stdio
 NAME= r0
 
 run: clean kernel.iso

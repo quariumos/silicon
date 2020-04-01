@@ -51,18 +51,21 @@ void text_outc(u8 c)
         text_y++;
         text_x = -1;
         break;
-    
+
     default:
         text_setc(c, DEFAULT_TEXT_COLOR, text_x, text_y);
         break;
     }
 }
 
-void init_text()
+void init_text(char *id)
 {
     for (u32 y = 0; y < TEXT_FIELD_HEIGHT; y++)
         for (u32 x = 0; x < TEXT_FIELD_WIDTH; x++)
             text_setc(' ', DEFAULT_TEXT_COLOR, x, y);
+#ifdef SILICON_SERIAL_LOG
+    kprintf(serial.out_device, "'%s' initialized\n", id);
+#endif
 }
 
 generic_io_device text =

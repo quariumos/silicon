@@ -1,11 +1,15 @@
 #ifndef DEVICE_KBD_H
 #define DEVICE_KBD_H
 #include <cpu/port.h>
-#if ARCH == i386
 #include <cpu/irq/isr.h>
 #include <cpu/irq/idt.h>
-#endif
 #include <io/device.h>
+
+#ifdef SILICON_SERIAL_LOG
+#include <io/kprintf.h>
+#include <io/duplex/serial.h>
+#endif
+
 // Sample keymap (US layout), taken from a tutorial by Bran
 u8 kbdus[128] =
     {
@@ -53,13 +57,11 @@ __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_fram
     keyboard_stream.write(kbdus[scancode]);
     eoi(1);
 }
-void init_kbd()
+
+void init_kbd(char *id)
 {
-#if ARCH == i386
-    init_keyboard_stream(NULL);
-    set_idt_entry(33, keyboard_interrupt_handler);
-    pic_unmask(1);
-    asm("sti");
+#ifdef SILICON_SERIAL_LOG
+    kprintf(serial.out_device, "'%s' initialized\n", id);
 #endif
 }
 generic_io_device kbd =
