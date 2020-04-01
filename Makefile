@@ -11,7 +11,7 @@ run: clean kernel.iso
 
 kernel.iso: kernel.bin
 	cp kernel.bin iso/boot
-	grub-mkrescue -d /usr/lib/grub/i386-pc -o $@ iso
+	grub2-mkrescue -d /usr/lib/grub/i386-pc -o $@ iso
 
 start.o:
 	nasm -f elf32 src/start.asm -o $@
