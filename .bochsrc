@@ -1,2 +1,0 @@
-ata0-slave: type=cdrom, path=kernel.iso, status=inserted
-boot: cdrom
