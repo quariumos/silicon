@@ -60,7 +60,7 @@ void init_kbd(char *id)
     kprintf(serial.out_device, "'%s' initialized\n", id);
 #endif
     init_keyboard_stream(NULL);
-    IRQ(33, keyboard_interrupt_handler)
+    IRQ(1, keyboard_interrupt_handler);
     asm("sti");
 }
 generic_io_device kbd =

@@ -3,13 +3,13 @@ ARCH?=i386
 _CLANG_TRIPLE=${ARCH}-pc-none-bin
 
 _CF= -I src/include -target ${_CLANG_TRIPLE} -DARCH=${ARCH} -ffreestanding -g
-_EF= -no-reboot -m 2M -serial stdio -d int
+_EF= -no-reboot -m 2M -serial stdio -s -S
 
 debug: clean kernel.iso
-	qemu-system-${ARCH} ${_EF} -cdrom kernel.iso
+	qemu-system-${ARCH} ${_EF} -cdrom kernel.iso & gdb -x kernel.gdb
 
-kernel.iso: kernel.bin
-	cp kernel.bin iso/boot
+kernel.iso: kernel.elf
+	cp kernel.elf iso/boot
 	grub2-mkrescue -d /usr/lib/grub/i386-pc -o $@ iso
 
 irq.o:
@@ -21,7 +21,7 @@ start.o:
 multiboot.o:
 	nasm -f elf32 src/multiboot2.s -o $@
 
-kernel.bin: multiboot.o start.o irq.o kernel.o
+kernel.elf: multiboot.o start.o irq.o kernel.o
 	ld -m elf_i386 -T linker.ld -o $@ $^
 
 kernel.o:

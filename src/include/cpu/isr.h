@@ -94,8 +94,11 @@ void set_isr_handler(int vector, isr_handler_t handler)
     isr_handler_list[vector] = handler;
 }
 
-#define IRQ(n, f)       \
-    pic_unmask(n - 32); \
+#define IRQ(n, f)  \
+    pic_unmask(n); \
+    set_isr_handler(n + 32, f);
+
+#define EXC(n, f) \
     set_isr_handler(n, f);
 
 void global_isr_manager(int n)
