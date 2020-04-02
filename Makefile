@@ -31,4 +31,4 @@ kernel.o:
 	${_CC} -c -o $@ ${_CF} src/main.c
 
 clean:
-	rm -rf *.bin *.o *.iso iso/boot/*.bin
+	rm -rf *.o *.iso iso/boot/*.elf
