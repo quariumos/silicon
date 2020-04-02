@@ -13,16 +13,22 @@ idt_ptr resb 8 * 2
 section .text
 %macro IRQ 1
 global irq_%1
-s_%1:
 irq_%1:
 push %1
 call global_irq_manager
 iret
-mov word [idt+%1*idt_entry_size], (irq_%1 - s_%1) & 0xffff ; convincing NASM to AND the label, result is offset_lowerbits
-mov byte [idt+%1*idt_entry_size+16], 0x08
-mov byte [idt+%1*idt_entry_size+32], 0
-mov byte [idt+%1*idt_entry_size+40], 0x8e
-mov word [idt+%1*idt_entry_size+48], (irq_%1 - s_%1) & 0xffff0000 >> 16 ; convincing NASM to do a little bit more magic, result is offset_higherbits
+mov eax, irq_%1
+and eax, 0xffff
+pop eax
+mov [idt+%1*idt_entry_size], ax
+mov byte [idt+%1*idt_entry_size+2], 0x08
+mov byte [idt+%1*idt_entry_size+3], 0
+mov byte [idt+%1*idt_entry_size+4], 0x8e
+mov ebx, irq_%1
+and ebx, 0xffff0000
+shr ebx, 16
+pop ebx
+mov [idt+%1*idt_entry_size+6], bx
 %endmacro
 
 IRQ 33 ; enable PS/2 keyboard interrupt for testing purposes

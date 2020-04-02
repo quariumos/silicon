@@ -3,11 +3,10 @@ ARCH?=i386
 _CLANG_TRIPLE=${ARCH}-pc-none-bin
 
 _CF= -I src/include -target ${_CLANG_TRIPLE} -DARCH=${ARCH} -ffreestanding -g
-_EF= -no-reboot -m 2M -serial stdio -d int
 NAME= r0
 
-run: clean kernel.iso
-	qemu-system-${ARCH} ${_EF} -cdrom kernel.iso
+debug: clean kernel.iso
+	gdb -x $(ARCH).gdb
 
 kernel.iso: kernel.bin
 	cp kernel.bin iso/boot
