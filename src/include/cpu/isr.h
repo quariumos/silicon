@@ -70,24 +70,21 @@ void remap_pic(u16 start_offset, u16 end_offset)
 }
 
 // IDT part
-
-extern void load_idt();
-typedef struct
+struct idt_entry
 {
     unsigned short int offset_lowerbits;
     unsigned short int selector;
     u8 zero;
     u8 type_attr;
     unsigned short int offset_higherbits;
-} __attribute__((packed)) idt_entry_t;
+} __attribute__((packed));
+
 #define IDT_SIZE 256
-extern idt_entry_t idt[IDT_SIZE];
+struct idt_entry idt[IDT_SIZE];
 
 typedef void (*isr_handler_t)();
 
-isr_handler_t isr_handler_list[IDT_SIZE] = {
-    noop,
-};
+isr_handler_t isr_handler_list[IDT_SIZE];
 
 void set_isr_handler(int vector, isr_handler_t handler)
 {
@@ -104,11 +101,28 @@ void set_isr_handler(int vector, isr_handler_t handler)
 void global_isr_manager(int n)
 {
 #ifdef SILICON_SERIAL_LOG
-    kprintf(serial.out_device, "Log: IRQ %d\n", n);
+    kprintf(serial.out_device, "Log: ISR %d\n", n);
 #endif
-    isr_handler_t f = isr_handler_list[n];
-    if (f != noop)
-        isr_handler_list[n]();
+    isr_handler_list[n]();
     eoi(n - 32);
+}
+
+void install_idt()
+{
+    u64 idt_ptr[2];
+    u64 idt_address = (u64)idt;
+    idt_ptr[0] = (sizeof(struct idt_entry) * 256) + ((idt_address & 0xffff) << 16);
+    idt_ptr[1] = idt_address >> 16;
+    for (u64 vector = 0; vector < 256; vector++)
+    {
+        u64 handler_address = (u64)global_isr_manager;
+        idt[vector].offset_lowerbits = handler_address & 0xffff;
+        idt[vector].selector = 0x08;
+        idt[vector].zero = 0;
+        idt[vector].type_attr = 0x8e;
+        idt[vector].offset_higherbits = (handler_address & 0xffff0000) >> 16;
+    }
+
+    __asm__("lidt %0" ::"m"(*idt_ptr));
 }
 #endif

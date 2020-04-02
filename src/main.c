@@ -15,7 +15,7 @@ void kbd_log(u8 data)
 void kmain()
 {
     remap_pic(32, 47);
-    load_idt();
+    install_idt();
     serial.init(serial.id);
     kbd.init(kbd.id);
     text.init(text.id);

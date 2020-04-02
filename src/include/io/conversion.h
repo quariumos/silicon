@@ -6,7 +6,7 @@ char *itoa(u32 n, u32 base, char *buffer)
     char *rc, *ptr, *low;
     rc = ptr = buffer;
     // For negative decimal numbers
-    if (n < 10 && base == 10)
+    if (n < 0 && base == 10)
         *ptr++ = '-';
     // Remember the start position
     low = ptr;

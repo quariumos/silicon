@@ -29,7 +29,7 @@ void kprintf(out_io_device_t device, const char *format, ...)
                     device.write(*d++);
                 break;
             case 'd': // for integers
-                n = va_arg(ap, s32);
+                n = va_arg(ap, int);
                 itoa(n, 10, d);
                 while (*d != 0)
                     device.write(*d++);
