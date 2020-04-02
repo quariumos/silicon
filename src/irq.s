@@ -13,7 +13,6 @@ idt_ptr resb 8 * 2
 section .text
 %macro IRQ 1
 global irq_%1
-cli ; disable interrupts
 ; calculate offset_lowerbits
 mov eax, irq_%1
 and eax, 0xffff
@@ -27,7 +26,6 @@ mov byte [idt+%1*idt_entry_size+16], 0x08
 mov byte [idt+%1*idt_entry_size+32], 0
 mov byte [idt+%1*idt_entry_size+40], 0x8e
 mov [idt+%1*idt_entry_size+48], ebx
-sti ; enable interrupts
 irq_%1:
 pusha
 push %1
