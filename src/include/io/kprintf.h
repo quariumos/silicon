@@ -34,6 +34,9 @@ void kprintf(out_io_device_t device, const char *format, ...)
                 while (*d != 0)
                     device.write(*d++);
                 break;
+            case 'c': // for characters
+                device.write(va_arg(ap, int));
+                break;
             case 'x': // for hexadecimals
                 itoa(va_arg(ap, s32), 16, d);
                 while (*d != 0)

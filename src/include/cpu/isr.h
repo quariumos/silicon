@@ -100,9 +100,6 @@ void set_isr_handler(int vector, isr_handler_t handler)
 
 void global_isr_manager(int n)
 {
-#ifdef SILICON_SERIAL_LOG
-    kprintf(serial.out_device, "Log: ISR %d\n", n);
-#endif
     isr_handler_list[n]();
     eoi(n - 32);
 }

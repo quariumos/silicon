@@ -7,6 +7,7 @@
 #ifdef SILICON_SERIAL_LOG
 #include <io/kprintf.h>
 #include <io/duplex/serial.h>
+#include <io/out/text.h>
 #endif
 
 // Sample keymap (US layout), taken from a tutorial by Bran
@@ -53,6 +54,8 @@ STREAM(keyboard_stream)
 void keyboard_interrupt_handler()
 {
     u8 scancode = inb(0x60);
+    u8 c = kbdus[scancode];
+    kprintf(text.out_device, "%c", c);
 }
 void init_kbd(char *id)
 {
