@@ -1,7 +1,7 @@
 #ifndef DEVICE_KBD_H
 #define DEVICE_KBD_H
 #include <cpu/port.h>
-#include <cpu/irq.h>
+#include <cpu/isr.h>
 #include <io/device.h>
 
 #ifdef SILICON_SERIAL_LOG
@@ -60,8 +60,7 @@ void init_kbd(char *id)
     kprintf(serial.out_device, "'%s' initialized\n", id);
 #endif
     init_keyboard_stream(NULL);
-    set_irq_handler(33, keyboard_interrupt_handler);
-    pic_unmask(1);
+    IRQ(33, keyboard_interrupt_handler)
     asm("sti");
 }
 generic_io_device kbd =
