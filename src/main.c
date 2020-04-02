@@ -15,12 +15,12 @@ void kbd_log(u8 data)
 void kmain()
 {
     remap_pic(32, 47);
-    install_idt();
+    load_idt();
     serial.init(serial.id);
     kbd.init(kbd.id);
     text.init(text.id);
     kprintf(text.out_device, ">> Silicon Kernel loaded.\n");
-    kprintf(text.out_device, "IDT:\n size %d\n address %x\n", sizeof(idt), (u16*)&idt);
+    kprintf(text.out_device, "IDT:\n size %d\n", sizeof(idt));
     for (;;)
         asm("hlt");
 }
