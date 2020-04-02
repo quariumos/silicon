@@ -13,32 +13,22 @@ idt_ptr resb 8 * 2
 section .text
 %macro IRQ 1
 global irq_%1
-; calculate offset_lowerbits
-mov eax, irq_%1
-and eax, 0xffff
-; calculate offset_higherbits
-mov ebx, irq_%1
-and ebx, 0xffff0000
-shr ebx, 16
-; set the entry
-mov [idt+%1*idt_entry_size], eax
+s_%1:
+irq_%1:
+push %1
+call global_irq_manager
+iret
+mov word [idt+%1*idt_entry_size], (irq_%1 - s_%1) & 0xffff ; convincing NASM to AND the label, result is offset_lowerbits
 mov byte [idt+%1*idt_entry_size+16], 0x08
 mov byte [idt+%1*idt_entry_size+32], 0
 mov byte [idt+%1*idt_entry_size+40], 0x8e
-mov [idt+%1*idt_entry_size+48], ebx
-irq_%1:
-pusha
-push %1
-call global_irq_manager
-popa
-iret
+mov word [idt+%1*idt_entry_size+48], (irq_%1 - s_%1) & 0xffff0000 >> 16 ; convincing NASM to do a little bit more magic, result is offset_higherbits
 %endmacro
 
-IRQ 33
+IRQ 33 ; enable PS/2 keyboard interrupt for testing purposes
 
 global load_idt
 load_idt:
-cli  ; disable interrupts
 ; save used registers
 push eax
 push ebx
@@ -61,5 +51,4 @@ lidt [idt_ptr]
 ; restore used registers
 pop ebx
 pop eax
-sti ; enable interrupts
 ret

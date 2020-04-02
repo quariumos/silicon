@@ -97,9 +97,7 @@ void global_irq_manager(int n)
 #endif
     irq_handler_t f = irq_handler_list[n];
     if (f != noop)
-    {
         irq_handler_list[n]();
-        eoi(n - 32);
-    }
+    eoi(n - 32);
 }
 #endif
