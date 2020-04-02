@@ -1,4 +1,4 @@
-
+#define SILICON_SERIAL_LOG
 
 #include <io/duplex/serial.h>
 #include <io/in/kbd.h>
@@ -19,8 +19,8 @@ void kmain()
     serial.init(serial.id);
     kbd.init(kbd.id);
     text.init(text.id);
-    kbd.in_device.stream->subscribe(kbd_log);
     kprintf(text.out_device, ">> Silicon Kernel loaded.\n");
+    kprintf(text.out_device, "IDT:\n size %d\n address %x\n", sizeof(idt), (u16*)&idt);
     for (;;)
         asm("hlt");
 }

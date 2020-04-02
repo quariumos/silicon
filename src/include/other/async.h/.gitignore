@@ -1,0 +1,7 @@
+/.vs
+*.filters
+*.user
+Debug
+
+async/build
+.vscode

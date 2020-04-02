@@ -2,7 +2,7 @@ _CC=clang
 ARCH?=i386
 _CLANG_TRIPLE=${ARCH}-pc-none-bin
 
-_CF= -I src/headers -target ${_CLANG_TRIPLE} -DARCH=${ARCH} -DSILICON_SERIAL_LOG -ffreestanding -g
+_CF= -I src/include -target ${_CLANG_TRIPLE} -DARCH=${ARCH} -ffreestanding -g
 _EF= -no-reboot -m 2M -serial stdio
 NAME= r0
 
@@ -13,13 +13,16 @@ kernel.iso: kernel.bin
 	cp kernel.bin iso/boot
 	grub2-mkrescue -d /usr/lib/grub/i386-pc -o $@ iso
 
+irq.o:
+	nasm -f elf32 src/irq.s -o $@
+
 start.o:
-	nasm -f elf32 src/start.asm -o $@
+	nasm -f elf32 src/start.s -o $@
 
 multiboot.o:
 	nasm -f elf32 src/multiboot2.s -o $@
 
-kernel.bin: multiboot.o start.o kernel.o
+kernel.bin: multiboot.o start.o irq.o kernel.o
 	ld -m elf_i386 -T linker.ld -o $@ $^
 
 kernel.o:

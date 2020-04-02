@@ -1,8 +1,7 @@
 #ifndef DEVICE_KBD_H
 #define DEVICE_KBD_H
 #include <cpu/port.h>
-#include <cpu/irq/isr.h>
-#include <cpu/irq/idt.h>
+#include <cpu/irq.h>
 #include <io/device.h>
 
 #ifdef SILICON_SERIAL_LOG
@@ -51,18 +50,19 @@ u8 kbdus[128] =
         0, /* All other keys are undefined */
 };
 STREAM(keyboard_stream)
-__attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_frame *frame)
+void keyboard_interrupt_handler()
 {
     u8 scancode = inb(0x60);
-    keyboard_stream.write(kbdus[scancode]);
-    eoi(1);
 }
-
 void init_kbd(char *id)
 {
 #ifdef SILICON_SERIAL_LOG
     kprintf(serial.out_device, "'%s' initialized\n", id);
 #endif
+    init_keyboard_stream(NULL);
+    set_irq_handler(33, keyboard_interrupt_handler);
+    pic_unmask(1);
+    asm("sti");
 }
 generic_io_device kbd =
     {

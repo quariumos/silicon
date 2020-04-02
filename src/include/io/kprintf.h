@@ -12,6 +12,7 @@ void kprintf(out_io_device_t device, const char *format, ...)
     va_start(ap, format);
     u32 ptr = -1;
     char *d;
+    int n;
     while (format[++ptr] != 0)
     {
         switch (format[ptr])
@@ -28,7 +29,8 @@ void kprintf(out_io_device_t device, const char *format, ...)
                     device.write(*d++);
                 break;
             case 'd': // for integers
-                itoa(va_arg(ap, s32), 10, d);
+                n = va_arg(ap, s32);
+                itoa(n, 10, d);
                 while (*d != 0)
                     device.write(*d++);
                 break;

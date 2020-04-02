@@ -15,4 +15,8 @@ typedef u64 uintptr_t;
 
 #define NULL (void *)0
 
+void noop()
+{
+}
+
 #endif
