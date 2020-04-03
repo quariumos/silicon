@@ -6,7 +6,7 @@
 #include <io/device.h>
 #include <io/conversion.h>
 
-void kprintf(out_io_device_t device, const char *format, ...)
+void _raw_kprintf(out_io_device_t device, const char *format, ...)
 {
     va_list ap;
     va_start(ap, format);

@@ -4,12 +4,6 @@
 #include <cpu/isr.h>
 #include <io/device.h>
 
-#ifdef SILICON_SERIAL_LOG
-#include <io/kprintf.h>
-#include <io/duplex/serial.h>
-#include <io/out/text.h>
-#endif
-
 // Sample keymap (US layout), taken from a tutorial by Bran
 u8 kbdus[128] =
     {
@@ -52,22 +46,16 @@ u8 kbdus[128] =
 };
 STREAM(keyboard_stream)
 
-__attribute__((interrupt)) 
-void keyboard_interrupt_handler(struct interrupt_frame *frame)
+__attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_frame *frame)
 {
     u8 scancode = inb(0x60);
     u8 c = kbdus[scancode];
-    kprintf(text.out_device, "%c", c);
     eoi(1);
 }
 void init_kbd(char *id)
 {
-#ifdef SILICON_SERIAL_LOG
-    kprintf(serial.out_device, "'%s' initialized\n", id);
-#endif
     init_keyboard_stream(NULL);
     set_idt_entry(33, keyboard_interrupt_handler);
-    asm("sti");
 }
 generic_io_device kbd =
     {

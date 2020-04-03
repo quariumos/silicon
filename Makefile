@@ -7,7 +7,7 @@ _EF= -no-reboot -m 2M -serial stdio
 
 DIST=dist
 
-run: clean kernel.iso remove_obj sym
+run: clean kernel.iso sym
 	qemu-system-${ARCH} ${_EF} -cdrom kernel.iso
 
 sym:
@@ -32,8 +32,5 @@ kernel.elf: multiboot.o start.o kernel.o
 kernel.o:
 	${_CC} -c -o $@ ${_CF} src/main.c
 
-remove_obj:
-	rm -rf *.o
-
 clean:
-	rm -rf kernel.elf kernel.iso iso/boot/*.elf
+	rm -rf kernel.elf kernel.iso iso/boot/*.elf *.o

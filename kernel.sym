@@ -4,7 +4,7 @@ kernel.elf:     формат файла elf32-i386
 SYMBOL TABLE:
 00100000 l    d  .boot	00000000 .boot
 00100020 l    d  .text	00000000 .text
-00101001 l    d  .rodata.str1.1	00000000 .rodata.str1.1
+0010107d l    d  .rodata.str1.1	00000000 .rodata.str1.1
 00102000 l    d  .data	00000000 .data
 00103000 l    d  .bss	00000000 .bss
 00000000 l    d  .debug_str	00000000 .debug_str
@@ -28,14 +28,15 @@ SYMBOL TABLE:
 00000000 l       .debug_str	00000000 
 00000032 l       .debug_str	00000000 
 0000003d l       .debug_str	00000000 
-00000208 l       .debug_str	00000000 
-00000067 l       .debug_str	00000000 
+000002c9 l       .debug_str	00000000 
 0000009b l       .debug_str	00000000 
+0000021a l       .debug_str	00000000 
+00000067 l       .debug_str	00000000 
 0000006c l       .debug_str	00000000 
 00000076 l       .debug_str	00000000 
 0000007c l       .debug_str	00000000 
 0000008b l       .debug_str	00000000 
-000002e2 l       .debug_str	00000000 
+000002a0 l       .debug_str	00000000 
 0000008f l       .debug_str	00000000 
 00000092 l       .debug_str	00000000 
 000000a0 l       .debug_str	00000000 
@@ -49,23 +50,22 @@ SYMBOL TABLE:
 000000fa l       .debug_str	00000000 
 000000fd l       .debug_str	00000000 
 00000111 l       .debug_str	00000000 
-0000030b l       .debug_str	00000000 
 00000123 l       .debug_str	00000000 
-0000012a l       .debug_str	00000000 
-000002bd l       .debug_str	00000000 
-00000131 l       .debug_str	00000000 
-00000309 l       .debug_str	00000000 
-000001df l       .debug_str	00000000 
-00000277 l       .debug_str	00000000 
+000002c7 l       .debug_str	00000000 
+00000129 l       .debug_str	00000000 
+00000130 l       .debug_str	00000000 
+0000030d l       .debug_str	00000000 
+000001f1 l       .debug_str	00000000 
+0000027c l       .debug_str	00000000 
 00000137 l       .debug_str	00000000 
 00000148 l       .debug_str	00000000 
 00000151 l       .debug_str	00000000 
 00000156 l       .debug_str	00000000 
 00000160 l       .debug_str	00000000 
-00000265 l       .debug_str	00000000 
+0000026a l       .debug_str	00000000 
 00000172 l       .debug_str	00000000 
 00000183 l       .debug_str	00000000 
-000002d9 l       .debug_str	00000000 
+00000297 l       .debug_str	00000000 
 000001a5 l       .debug_str	00000000 
 00000191 l       .debug_str	00000000 
 0000019a l       .debug_str	00000000 
@@ -76,126 +76,128 @@ SYMBOL TABLE:
 000001bf l       .debug_str	00000000 
 000001c4 l       .debug_str	00000000 
 000001ca l       .debug_str	00000000 
-000001dd l       .debug_str	00000000 
-000001ed l       .debug_str	00000000 
-000001f7 l       .debug_str	00000000 
-00000203 l       .debug_str	00000000 
-0000020f l       .debug_str	00000000 
-00000214 l       .debug_str	00000000 
-0000021c l       .debug_str	00000000 
-00000220 l       .debug_str	00000000 
-00000229 l       .debug_str	00000000 
-00000234 l       .debug_str	00000000 
-0000023e l       .debug_str	00000000 
-0000024e l       .debug_str	00000000 
-00000261 l       .debug_str	00000000 
-0000026f l       .debug_str	00000000 
-0000027b l       .debug_str	00000000 
-00000283 l       .debug_str	00000000 
-0000028a l       .debug_str	00000000 
-0000028e l       .debug_str	00000000 
+000001cf l       .debug_str	00000000 
+000001dc l       .debug_str	00000000 
+000001ef l       .debug_str	00000000 
+000001ff l       .debug_str	00000000 
+00000209 l       .debug_str	00000000 
+00000215 l       .debug_str	00000000 
+00000221 l       .debug_str	00000000 
+00000225 l       .debug_str	00000000 
+0000022e l       .debug_str	00000000 
+00000239 l       .debug_str	00000000 
+00000243 l       .debug_str	00000000 
+00000253 l       .debug_str	00000000 
+00000266 l       .debug_str	00000000 
+00000274 l       .debug_str	00000000 
+00000280 l       .debug_str	00000000 
 00000295 l       .debug_str	00000000 
-0000029d l       .debug_str	00000000 
-000002a4 l       .debug_str	00000000 
-000002ae l       .debug_str	00000000 
-000002b8 l       .debug_str	00000000 
+000002a7 l       .debug_str	00000000 
 000002c2 l       .debug_str	00000000 
-000002d7 l       .debug_str	00000000 
-000002e9 l       .debug_str	00000000 
-00000304 l       .debug_str	00000000 
-0000030d l       .debug_str	00000000 
-00000315 l       .debug_str	00000000 
-0000031d l       .debug_str	00000000 
-00000323 l       .debug_str	00000000 
-00000328 l       .debug_str	00000000 
+000002cb l       .debug_str	00000000 
+000002d3 l       .debug_str	00000000 
+000002da l       .debug_str	00000000 
+000002de l       .debug_str	00000000 
+000002e5 l       .debug_str	00000000 
+000002ed l       .debug_str	00000000 
+000002f4 l       .debug_str	00000000 
+000002fe l       .debug_str	00000000 
+00000308 l       .debug_str	00000000 
+00000312 l       .debug_str	00000000 
+0000031a l       .debug_str	00000000 
+00000322 l       .debug_str	00000000 
 0000032f l       .debug_str	00000000 
-00000334 l       .debug_str	00000000 
-0000021e l       .debug_str	00000000 
-0000003b l       .debug_str	00000000 
-000001f5 l       .debug_str	00000000 
-0000033f l       .debug_str	00000000 
-00000344 l       .debug_str	00000000 
-000003c7 l       .debug_str	00000000 
-000003b2 l       .debug_str	00000000 
+00000335 l       .debug_str	00000000 
+0000033a l       .debug_str	00000000 
+00000341 l       .debug_str	00000000 
+00000207 l       .debug_str	00000000 
+00000346 l       .debug_str	00000000 
 0000034b l       .debug_str	00000000 
-0000034f l       .debug_str	00000000 
-00000359 l       .debug_str	00000000 
+000003fb l       .debug_str	00000000 
+000003c4 l       .debug_str	00000000 
+00000352 l       .debug_str	00000000 
+00000356 l       .debug_str	00000000 
+00000360 l       .debug_str	00000000 
 0000006f l       .debug_str	00000000 
-0000035d l       .debug_str	00000000 
 00000364 l       .debug_str	00000000 
-00000367 l       .debug_str	00000000 
-00000371 l       .debug_str	00000000 
+0000036b l       .debug_str	00000000 
+0000036e l       .debug_str	00000000 
+00000378 l       .debug_str	00000000 
 000001ae l       .debug_str	00000000 
-00000379 l       .debug_str	00000000 
-0000037f l       .debug_str	00000000 
-0000038c l       .debug_str	00000000 
-00000397 l       .debug_str	00000000 
-00000246 l       .debug_str	00000000 
+00000380 l       .debug_str	00000000 
+00000223 l       .debug_str	00000000 
+0000003b l       .debug_str	00000000 
+0000038b l       .debug_str	00000000 
+00000391 l       .debug_str	00000000 
 0000039e l       .debug_str	00000000 
-000003ae l       .debug_str	00000000 
-000003b6 l       .debug_str	00000000 
-000003c2 l       .debug_str	00000000 
-000003c6 l       .debug_str	00000000 
-000003ca l       .debug_str	00000000 
-00000212 l       .debug_str	00000000 
+000003a9 l       .debug_str	00000000 
+0000024b l       .debug_str	00000000 
+000003b0 l       .debug_str	00000000 
+000003c0 l       .debug_str	00000000 
+000003c8 l       .debug_str	00000000 
+000003e7 l       .debug_str	00000000 
+000003d4 l       .debug_str	00000000 
+000003d7 l       .debug_str	00000000 
+000003da l       .debug_str	00000000 
+000003bd l       .debug_str	00000000 
+000003dd l       .debug_str	00000000 
+000003ed l       .debug_str	00000000 
+000003f6 l       .debug_str	00000000 
+000003fa l       .debug_str	00000000 
+000003fe l       .debug_str	00000000 
+000001cd l       .debug_str	00000000 
 000001bd l       .debug_str	00000000 
-000003cf l       .debug_str	00000000 
-000003d3 l       .debug_str	00000000 
-0000012f l       .debug_str	00000000 
-00000128 l       .debug_str	00000000 
-000003d9 l       .debug_str	00000000 
-000003f2 l       .debug_str	00000000 
-000003df l       .debug_str	00000000 
-000003e2 l       .debug_str	00000000 
-000003e5 l       .debug_str	00000000 
-000003ab l       .debug_str	00000000 
-000003e8 l       .debug_str	00000000 
-000003f8 l       .debug_str	00000000 
-00100d20 l     F .text	00000027 f_keyboard_stream
-00100110 l     F .text	00000027 f_serial_stream
-00103c14 l     O .bss	0000000c keyboard_stream
-00103c0c l     O .bss	00000004 kprintf.d
-00103c00 l     O .bss	0000000c serial_stream
-001001e0 g     F .text	000000b8 init_serial
+00000403 l       .debug_str	00000000 
+00000407 l       .debug_str	00000000 
+00000135 l       .debug_str	00000000 
+0000012e l       .debug_str	00000000 
+0000040d l       .debug_str	00000000 
+00103c00 l     O .bss	00000004 _raw_kprintf.d
+00100950 l     F .text	00000027 f_keyboard_stream
+00100440 l     F .text	00000027 f_serial_stream
+00103c10 l     O .bss	0000000c keyboard_stream
+00103c04 l     O .bss	0000000c serial_stream
+00100510 g     F .text	000000b8 init_serial
 00100080 g     F .text	0000001d inb
-00100ab0 g     F .text	00000043 memsetw
+00100bf0 g     F .text	00000043 memsetw
 00100840 g     F .text	0000002c global_isr_manager
-001020b4 g     O .data	00000018 kbd
-00100920 g     F .text	00000098 memmove
+00102098 g     O .data	00000018 kbd
+00100a60 g     F .text	00000098 memmove
 001000d0 g     F .text	00000008 NOSUB
+00100f30 g     F .text	00000012 int_stub_log
 00103000 g     O .bss	00000400 isr_handler_list
 00100870 g     F .text	00000067 set_idt_entry
-00100b00 g     F .text	00000048 memcpy
-00100ba0 g     F .text	000000a5 text_outc
-001002a0 g     F .text	000000ed itoa
-00100190 g     F .text	00000042 serial_outc
-00100c50 g     F .text	0000009e init_text
-0010201c g     O .data	00000018 text
-00100b50 g     F .text	00000043 text_setc
+00100c40 g     F .text	00000048 memcpy
+00100ce0 g     F .text	000000a5 text_outc
+001000e0 g     F .text	000000ed itoa
+001001d0 g     F .text	00000234 _raw_kprintf
+001004c0 g     F .text	00000042 serial_outc
+00100d90 g     F .text	00000073 init_text
+001020b4 g     O .data	00000018 text
+00100c90 g     F .text	00000043 text_setc
 001008e0 g     F .text	00000038 install_idt
-00100140 g     F .text	0000004f serial_in
+00100470 g     F .text	0000004f serial_in
 00100620 g     F .text	0000007c pic_mask
 001005d0 g     F .text	00000044 eoi
 00102000 g     O .data	00000018 serial
 0010003e g       .text	00000000 _start
-00100d50 g     F .text	000000ba keyboard_interrupt_handler
-00103c10 g     O .bss	00000002 text_y
-00102034 g     O .data	00000080 kbdus
-00100e80 g     F .text	0000002f kbd_log
-001009c0 g     F .text	00000099 memcmp
+00100980 g     F .text	00000098 keyboard_interrupt_handler
+00103c1c g     O .bss	00000002 text_y
+00102018 g     O .data	00000080 kbdus
+00100e10 g     F .text	0000002f kbd_log
+00100b00 g     F .text	00000099 memcmp
 001006a0 g     F .text	0000007f pic_unmask
 00100820 g     F .text	0000001a set_isr_handler
 001000a0 g     F .text	00000022 outb
-00100a60 g     F .text	00000042 memset
-001000e0 g     F .text	00000029 init_serial_stream
-00100eb0 g     F .text	00000082 gpf_log
+00100ba0 g     F .text	00000042 memset
+00100410 g     F .text	00000029 init_serial_stream
+00100e40 g     F .text	000000e4 gpf_log
 00103400 g     O .bss	00000800 idt
 00100720 g     F .text	000000f3 remap_pic
-00100390 g     F .text	00000234 kprintf
-00102018 g     O .data	00000002 text_x
-00100cf0 g     F .text	00000029 init_keyboard_stream
-00100f40 g     F .text	000000c1 kmain
+001020b0 g     O .data	00000002 text_x
+00100920 g     F .text	00000029 init_keyboard_stream
+00100f50 g     F .text	0000012d kmain
 00100070 g     F .text	00000005 noop
-00100e10 g     F .text	00000066 init_kbd
+00100a20 g     F .text	00000038 init_kbd
 
 
