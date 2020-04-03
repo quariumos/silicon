@@ -11,10 +11,11 @@ void kprintf(out_io_device_t device, const char *format, ...)
     va_list ap;
     va_start(ap, format);
     u32 ptr = -1;
-    char *d;
+    static char *d;
     int n;
     while (format[++ptr] != 0)
     {
+        d = "";
         switch (format[ptr])
         {
         case '%':

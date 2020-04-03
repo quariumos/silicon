@@ -17,7 +17,7 @@ void gpf_log(struct interrupt_frame *frame)
     // Just wait, it prints too fast otherwise
     for (u32 i = 0; i < 100000000; i++)
         ;
-    kprintf(serial.out_device, "Error: General Protection fault, %s related, at %x\n", frame->ss == 1 ? "seg." : "not seg.", frame->ip);
+    kprintf(serial.out_device, "Error: General Protection fault, %s related, at %d\n", frame->ss == 1 ? "seg." : "not seg.", frame->ip);
 }
 
 void kmain()
