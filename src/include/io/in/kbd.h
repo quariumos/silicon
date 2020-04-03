@@ -51,11 +51,14 @@ u8 kbdus[128] =
         0, /* All other keys are undefined */
 };
 STREAM(keyboard_stream)
-void keyboard_interrupt_handler()
+
+__attribute__((interrupt)) 
+void keyboard_interrupt_handler(struct interrupt_frame *frame)
 {
     u8 scancode = inb(0x60);
     u8 c = kbdus[scancode];
     kprintf(text.out_device, "%c", c);
+    eoi(1);
 }
 void init_kbd(char *id)
 {
@@ -63,7 +66,7 @@ void init_kbd(char *id)
     kprintf(serial.out_device, "'%s' initialized\n", id);
 #endif
     init_keyboard_stream(NULL);
-    IRQ(1, keyboard_interrupt_handler);
+    set_idt_entry(33, keyboard_interrupt_handler);
     asm("sti");
 }
 generic_io_device kbd =
