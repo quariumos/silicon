@@ -1,5 +1,5 @@
 
-kernel.elf:     формат файла elf32-i386
+dist/kernel.elf:     формат файла elf32-i386
 
 SYMBOL TABLE:
 00100000 l    d  .boot	00000000 .boot
