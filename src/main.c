@@ -15,7 +15,7 @@ void gpf_log(struct interrupt_frame *frame)
     // Just wait, it prints too fast otherwise
     for (u32 i = 0; i < 100000000; i++)
         ;
-    klog("Error: General Protection fault, %s related, at 0x%x", frame->ss == 1 ? "seg." : "not seg.", frame->ip);
+    klog("Error: General Protection fault, %s related, at 0x%x\n", frame->ss == 1 ? "seg." : "not seg.", frame->ip);
 }
 
 __attribute__((interrupt))
@@ -31,7 +31,7 @@ void kmain()
     text.init(text.id);
     set_idt_entry(13, gpf_log);
     install_idt();
-    klog("Silicon Kernel loaded.", "");
+    klog("Silicon Kernel loaded.\n", "");
     kprintf("IDT:\n size %d", sizeof(idt));
     for (;;)
         asm("hlt");

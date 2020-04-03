@@ -56,6 +56,7 @@ void init_kbd(char *id)
 {
     init_keyboard_stream(NULL);
     set_idt_entry(33, keyboard_interrupt_handler);
+    asm("sti");
 }
 generic_io_device kbd =
     {

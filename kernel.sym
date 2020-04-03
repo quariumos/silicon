@@ -4,7 +4,7 @@ kernel.elf:     формат файла elf32-i386
 SYMBOL TABLE:
 00100000 l    d  .boot	00000000 .boot
 00100020 l    d  .text	00000000 .text
-0010107d l    d  .rodata.str1.1	00000000 .rodata.str1.1
+0010101c l    d  .rodata.str1.1	00000000 .rodata.str1.1
 00102000 l    d  .data	00000000 .data
 00103000 l    d  .bss	00000000 .bss
 00000000 l    d  .debug_str	00000000 .debug_str
@@ -164,7 +164,7 @@ SYMBOL TABLE:
 00102098 g     O .data	00000018 kbd
 00100a60 g     F .text	00000098 memmove
 001000d0 g     F .text	00000008 NOSUB
-00100f30 g     F .text	00000012 int_stub_log
+00100f00 g     F .text	00000012 int_stub_log
 00103000 g     O .bss	00000400 isr_handler_list
 00100870 g     F .text	00000067 set_idt_entry
 00100c40 g     F .text	00000048 memcpy
@@ -191,13 +191,13 @@ SYMBOL TABLE:
 001000a0 g     F .text	00000022 outb
 00100ba0 g     F .text	00000042 memset
 00100410 g     F .text	00000029 init_serial_stream
-00100e40 g     F .text	000000e4 gpf_log
+00100e40 g     F .text	000000b3 gpf_log
 00103400 g     O .bss	00000800 idt
 00100720 g     F .text	000000f3 remap_pic
 001020b0 g     O .data	00000002 text_x
 00100920 g     F .text	00000029 init_keyboard_stream
-00100f50 g     F .text	0000012d kmain
+00100f20 g     F .text	000000fc kmain
 00100070 g     F .text	00000005 noop
-00100a20 g     F .text	00000038 init_kbd
+00100a20 g     F .text	00000039 init_kbd
 
 
