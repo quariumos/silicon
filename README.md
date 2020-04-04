@@ -10,7 +10,7 @@ Once it actually gets to be something you want to use, feel free to:
 ## Running the kernel
 Build requirements:
 1. grub-mkrescue and xorisso
-2. clang (theoretically a gcc-based cross compiler could work too)
+2. clang (theoretically a gcc-based cross compiler could work too) (tested on Ubuntu 20.04, not guaranteed to work anywhere else)
 3. ld
 4. nasm
 

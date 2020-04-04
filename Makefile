@@ -18,7 +18,7 @@ debug: clean kernel.iso
 
 kernel.iso: kernel.elf
 	cp kernel.elf iso/boot
-	grub2-mkrescue -d /usr/lib/grub/i386-pc -o $@ iso
+	grub-mkrescue -d /usr/lib/grub/i386-pc -o $@ iso
 
 start.o:
 	nasm -f elf32 src/start.s -o $@
