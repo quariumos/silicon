@@ -1,3 +1,7 @@
+### Warning
+If the resulting .iso file fails to run properly, try compiling it on Ubuntu,
+for an unknown reason Clang-10 produces faulty code on other distributions of Linux
+
 # Silicon
 This repository contains all the code for the QuariumOS kernel, Silicon.
 QuariumOS should be located in another repository somewhere in this organization, but it will likely be so only when the kernel is in it's alpha stage.

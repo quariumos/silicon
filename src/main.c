@@ -35,7 +35,6 @@ void kmain()
     install_idt();
     kbd.in_device.stream->subscriber = kbd_log;
     klog("Silicon Kernel loaded.\n", "");
-    kprintf("IDT:\n size %d", sizeof(idt));
     for (;;)
         asm("hlt");
 }
