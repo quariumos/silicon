@@ -15,6 +15,10 @@ typedef u64 uintptr_t;
 
 #define NULL (void *)0
 
+#define WAIT(n)                 \
+    for (u32 i = 0; i < n; i++) \
+        ;
+
 void noop()
 {
 }

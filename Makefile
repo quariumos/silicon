@@ -7,11 +7,11 @@ _EF= -no-reboot -m 2M -serial stdio
 
 DIST=dist
 
-run: clean kernel.iso sym
+run: clean kernel.iso
 	qemu-system-${ARCH} ${_EF} -cdrom kernel.iso
 
 sym:
-	objdump --syms kernel.elf > kernel.sym
+	objdump -dj .text kernel.elf > kernel.sym
 
 debug: clean kernel.iso
 	qemu-system-${ARCH} ${_EF} -s -S -cdrom kernel.iso & gdb --batch -x kernel.gdb

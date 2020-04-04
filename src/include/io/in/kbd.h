@@ -3,6 +3,7 @@
 #include <cpu/port.h>
 #include <cpu/isr.h>
 #include <io/device.h>
+#include <io/log.h>
 
 // Sample keymap (US layout), taken from a tutorial by Bran
 u8 kbdus[128] =
@@ -50,12 +51,15 @@ __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_fram
 {
     u8 scancode = inb(0x60);
     u8 c = kbdus[scancode];
+    keyboard_stream.write(c);
     eoi(1);
 }
 void init_kbd(char *id)
 {
     init_keyboard_stream(NULL);
     set_idt_entry(33, keyboard_interrupt_handler);
+    outb(0x21, 0xfd);
+    outb(0xa1, 0xff);
     asm("sti");
 }
 generic_io_device kbd =

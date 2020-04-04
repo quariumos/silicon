@@ -13,7 +13,7 @@ void NOSUB(u8 data)
 typedef struct
 {
     // Functions to be called upon a stream change, maximum 3
-    stream_subscriber_t _s;
+    stream_subscriber_t subscriber;
     // For writing to the stream
     void (*write)(u8);
     void (*subscribe)(stream_subscriber_t);
@@ -24,13 +24,12 @@ typedef struct
     static void f_##name(u8 data)                    \
     {                                                \
         u32 i = -1;                                  \
-        name._s(data);                               \
+        name.subscriber(data);                               \
     }                                                \
     void init_##name(stream_subscriber_t subscriber) \
     {                                                \
-        name._s = subscriber;                        \
+        name.subscriber = subscriber;                        \
         name.write = f_##name;                       \
-        name.subscribe = init_##name;                     \
     }
 #define ARRAY(...)  \
     {               \

@@ -6,31 +6,34 @@
 
 void kbd_log(u8 data)
 {
-    serial.out_device.write(data);
     text.out_device.write(data);
 }
 
 void gpf_log(struct interrupt_frame *frame)
 {
     // Just wait, it prints too fast otherwise
-    for (u32 i = 0; i < 100000000; i++)
-        ;
+    WAIT(100000000)
     klog("Error: General Protection fault, %s related, at 0x%x\n", frame->ss == 1 ? "seg." : "not seg.", frame->ip);
 }
 
-__attribute__((interrupt))
-void int_stub_log(struct interrupt_frame *frame)
+void double_fault_log(struct interrupt_frame *frame)
 {
+    // Just wait, it prints too fast otherwise
+    WAIT(100000000)
+    klog("Error: Double fault\n", "");
 }
 
 void kmain()
 {
     remap_pic(32, 47);
-    serial.init(serial.id);
+    clear_idt();
     kbd.init(kbd.id);
+    serial.init(serial.id);
     text.init(text.id);
     set_idt_entry(13, gpf_log);
+    set_idt_entry(8, double_fault_log);
     install_idt();
+    kbd.in_device.stream->subscriber = kbd_log;
     klog("Silicon Kernel loaded.\n", "");
     kprintf("IDT:\n size %d", sizeof(idt));
     for (;;)

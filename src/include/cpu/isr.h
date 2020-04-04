@@ -91,27 +91,7 @@ struct interrupt_frame
 #define IDT_SIZE 256
 struct idt_entry idt[IDT_SIZE];
 
-typedef void (*isr_handler_t)();
-
-isr_handler_t isr_handler_list[IDT_SIZE];
-
-void set_isr_handler(int vector, isr_handler_t handler)
-{
-    isr_handler_list[vector] = handler;
-}
-
-#define IRQ(n, f)  \
-    pic_unmask(n); \
-    set_isr_handler(n + 32, f);
-
-#define EXC(n, f) \
-    set_isr_handler(n, f);
-
-void global_isr_manager(int n)
-{
-    isr_handler_list[n]();
-    eoi(n - 32);
-}
+typedef void (*isr_handler_t)(struct interrupt_frame *);
 
 void set_idt_entry(int vector, isr_handler_t handler)
 {
@@ -121,6 +101,17 @@ void set_idt_entry(int vector, isr_handler_t handler)
     idt[vector].zero = 0;
     idt[vector].type_attr = 0x8e;
     idt[vector].offset_higherbits = (handler_address & 0xffff0000) >> 16;
+}
+#include <io/log.h>
+__attribute__((interrupt)) void stub_handler(struct interrupt_frame *frame)
+{
+}
+
+// This has to be called *before* setting entries!
+void clear_idt()
+{
+    for (u32 i = 0; i < 256; i++)
+        set_idt_entry(i, stub_handler);
 }
 
 void install_idt()
