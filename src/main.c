@@ -1,10 +1,9 @@
-#define SILICON_SERIAL_LOG
 
 #include <io/in/kbd.h>
 #include <io/conversion.h>
 #include <io/log.h>
 
-void kbd_log(u8 data)
+void qsh_in(u8 data)
 {
     text.out_device.write(data);
 }
@@ -33,7 +32,7 @@ void kmain()
     set_idt_entry(13, gpf_log);
     set_idt_entry(8, double_fault_log);
     install_idt();
-    kbd.in_device.stream->subscriber = kbd_log;
+    kbd.in_device.stream->subscriber = qsh_in;
     klog("Silicon Kernel loaded.\n", "");
     for (;;)
         asm("hlt");

@@ -49,30 +49,30 @@ void move_cursor(u16 addr)
     outb(0x3D5, (u8)((addr >> 8) & 0xFF));
 }
 
-u16 text_x = 0, text_y = 0;
+s32 text_x = 0, text_y = 0;
 u16 text_color = DEFAULT_TEXT_COLOR;
 
-void text_new_line()
-{
-    text_y++, text_x = 0; // move to next line and set x to first text cell on the line
-                          // (------
-                          // *-----)
-    u16 line_start = text_y * 80 + text_x;
-    move_cursor(line_start);
-}
+#ifdef SILICON_SERIAL_LOG
+#include <io/duplex/serial.h>
+#endif
 
 // this function accept *relative* values
-void text_move(u16 x, u16 y)
+void text_move(s32 x, s32 y)
 {
     if (text_x == TEXT_FIELD_WIDTH)
         text_x = 0, text_y++; // move to new line, obviously
+    if (x < 0 && text_x == 0 && text_y == 0)
+        x = 0;
+    if(y > 0)
+        x = -text_x; // reset x if y is bigger than 0 (moving to next line)
     text_x += x;
     text_y += y;
     if (text_x < 0)
-        text_x = 0;
-    if (text_y < 0)
-        text_y = 0;
-    move_cursor(text_y * 80 + text_x); // update cursor position
+        text_y--, text_x = TEXT_FIELD_WIDTH-1;
+#ifdef SILICON_SERIAL_LOG
+    _raw_kprintf(serial.out_device, "y: %d, x: %d\n", text_y, text_x);
+#endif
+    move_cursor((u16)text_y * 80 + (u16)text_x); // update cursor position
 }
 
 void text_setc(u8 c)
@@ -82,7 +82,7 @@ void text_setc(u8 c)
     switch (c)
     {
     case '\n':
-        text_move(-text_x, 1); // move to new line
+        text_move(0, 1); // move to new line
         c = ' ';
         break;
     case '\b':
@@ -106,6 +106,7 @@ void init_text(char *id)
     outb(0x3D4, 0x0B);
     outb(0x3D5, (inb(0x3D5) & 0xE0) | cursor_end);
     text_fill(' ', DEFAULT_TEXT_COLOR, 0, 0, TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT);
+    text_move(-text_x, -text_y);
 }
 
 generic_io_device text =
