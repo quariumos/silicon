@@ -3,7 +3,6 @@
 #include <cpu/port.h>
 #include <cpu/isr.h>
 #include <io/device.h>
-#include <io/log.h>
 
 // Sample keymap (US layout), taken from a tutorial by Bran
 u8 kbdus[128] =
