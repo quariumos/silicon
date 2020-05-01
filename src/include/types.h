@@ -23,16 +23,4 @@ void noop()
 {
 }
 
-// djb2, not cryptographically reliable but suits our use for now
-u64 hash(char *str)
-{
-    u64 hash = 5381;
-    s32 c;
-
-    while ((c = *str++))
-        hash = ((hash << 5) + hash) + c; // hash * 33 + c
-
-    return hash;
-}
-
 #endif

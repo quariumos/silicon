@@ -52,29 +52,27 @@ void move_cursor(u16 addr)
 s32 text_x = 0, text_y = 0;
 u16 text_color = DEFAULT_TEXT_COLOR;
 
-enum
-{
-    TEXT_NO_MODIFY = 1,
-    TEXT_NO_FLAG = 0
-};
+#ifdef SILICON_SERIAL_LOG
+#include <io/duplex/serial.h>
+#endif
 
-// this function accepts *relative* values
+// this function accept *relative* values
 void text_move(s32 x, s32 y)
 {
-    u32 addr = (u16)text_y * 80 + (u16)text_x;
-    if ((addr >> 16) == TEXT_NO_MODIFY) // if has "non-modifiable" flag set
-        return;
     if (text_x == TEXT_FIELD_WIDTH)
         text_x = 0, text_y++; // move to new line, obviously
     if (x < 0 && text_x == 0 && text_y == 0)
         x = 0;
-    if (y > 0)
+    if(y > 0)
         x = -text_x; // reset x if y is bigger than 0 (moving to next line)
     text_x += x;
     text_y += y;
     if (text_x < 0)
-        text_y--, text_x = TEXT_FIELD_WIDTH - 1;
-    move_cursor(addr); // update cursor position
+        text_y--, text_x = TEXT_FIELD_WIDTH-1;
+#ifdef SILICON_SERIAL_LOG
+    _raw_kprintf(serial.out_device, "y: %d, x: %d\n", text_y, text_x);
+#endif
+    move_cursor((u16)text_y * 80 + (u16)text_x); // update cursor position
 }
 
 void text_setc(u8 c)

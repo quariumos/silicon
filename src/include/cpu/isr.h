@@ -123,13 +123,4 @@ void install_idt()
 
     __asm__("lidt %0" ::"m"(*idt_ptr));
 }
-
-// just as clear_idt(), this has to be called before setting handlers
-void isr_init()
-{
-    clear_idt();
-    remap_pic(32, 47);
-        install_idt();
-}
-
 #endif
