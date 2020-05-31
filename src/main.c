@@ -3,9 +3,9 @@
 #include <io/conversion.h>
 #include <io/log.h>
 
-void qsh_in(u8 data)
+void kbd_log(u8 data)
 {
-    text.out_device.write(data);
+    klog("%c\n", data);
 }
 
 void gpf_log(struct interrupt_frame *frame)
@@ -26,13 +26,12 @@ void kmain()
 {
     remap_pic(32, 47);
     clear_idt();
-    kbd.init(kbd.id);
+    kbd.init(kbd_log);
     serial.init(serial.id);
     text.init(text.id);
     set_idt_entry(13, gpf_log);
     set_idt_entry(8, double_fault_log);
     install_idt();
-    kbd.in_device.stream->subscriber = qsh_in;
     klog("Silicon Kernel loaded.\n", "");
     for (;;)
         asm("hlt");

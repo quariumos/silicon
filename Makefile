@@ -11,26 +11,26 @@ run: clean kernel.iso
 	qemu-system-${ARCH} ${_EF} -cdrom kernel.iso
 
 sym:
-	objdump -dj .text kernel.elf > kernel.sym
+	objdump -dj .text kernel.elf > info/kernel.sym
 
 debug: clean kernel.iso
-	qemu-system-${ARCH} ${_EF} -s -S -cdrom kernel.iso & gdb --batch -x kernel.gdb
+	qemu-system-${ARCH} ${_EF} -s -S -cdrom kernel.iso & ARCH=${ARCH} gdb --batch -x info/debug.gdb
 
-kernel.iso: kernel.elf
-	cp kernel.elf iso/boot
+kernel.iso: obj/kernel.elf
+	cp $< iso/boot
 	grub-mkrescue -d /usr/lib/grub/i386-pc -o $@ iso
 
-start.o:
-	nasm -f elf32 src/start.s -o $@
+obj/kernel.elf: obj/multiboot.o obj/start.o obj/kernel.o
+	ld -m elf_i386 -T info/linker.ld -o $@ $^
 
-multiboot.o:
-	nasm -f elf32 src/multiboot2.s -o $@
-
-kernel.elf: multiboot.o start.o kernel.o
-	ld -m elf_i386 -T linker.ld -o $@ $^
-
-kernel.o:
+obj/kernel.o:
 	${_CC} -c -o $@ ${_CF} src/main.c
 
+obj/start.o:
+	nasm -f elf32 src/start.s -o $@
+
+obj/multiboot.o:
+	nasm -f elf32 src/multiboot2.s -o $@
+
 clean:
-	rm -rf kernel.elf kernel.iso iso/boot/*.elf *.o
+	rm -rf kernel.elf kernel.iso iso/boot/*.elf obj/*

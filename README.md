@@ -1,6 +1,7 @@
 ### Warning
 If the resulting .iso file fails to run properly, try compiling it on Ubuntu,
 for an unknown reason Clang-10 produces faulty code on other distributions of Linux
+(you can also try using older versions of Clang)
 
 # Silicon
 This repository contains all the code for the QuariumOS kernel, Silicon.

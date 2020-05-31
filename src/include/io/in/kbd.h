@@ -58,9 +58,9 @@ __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_fram
         keyboard_stream.write(kbdus[scancode]);
     eoi(1);
 }
-void init_kbd(char *id)
+void init_kbd(stream_subscriber_t subscriber)
 {
-    init_keyboard_stream(NULL);
+    init_keyboard_stream(subscriber);
     set_idt_entry(33, keyboard_interrupt_handler);
     pic_unmask(1);
     asm("sti");
