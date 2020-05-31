@@ -2,3 +2,4 @@ obj
 .vscode
 *.tmp
 *.iso
+scripts/node_modules
