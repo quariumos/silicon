@@ -1,0 +1,19 @@
+#!/usr/bin/node
+const minimist = require('minimist')
+const arg = minimist(process.argv.slice(2))
+const fs = require('fs')
+const path = arg.path
+
+if (!path || typeof path !== 'string')
+    console.error(`Invalid 'path' value.`), process.exit(1)
+
+fs.exists(path).then(() => {
+    fs.readFile(arg.path).then(v => {
+        let config = JSON.parse(v)
+        console.log(config)
+    }).catch(r => {
+        console.error(`build: Error reading config: '${r}'.`), process.exit(1);
+    }).finally(() => {
+        console.log(`build: Done.`)
+    })
+})
