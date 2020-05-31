@@ -4,16 +4,22 @@ const arg = minimist(process.argv.slice(2))
 const fs = require('fs')
 const path = arg.path
 
-if (!path || typeof path !== 'string')
+function build(path) {
+    fs.exists(path, (ex) => {
+        if (!ex)
+            console.error(`'path' file does not exist.`), process.exit(1)
+        fs.readFile(arg.path, (e, v) => {
+            console.log(e, v.toString())
+        })
+    })
+}
+
+if (typeof path !== ('string' || 'array'))
     console.error(`Invalid 'path' value.`), process.exit(1)
 
-fs.exists(path).then(() => {
-    fs.readFile(arg.path).then(v => {
-        let config = JSON.parse(v)
-        console.log(config)
-    }).catch(r => {
-        console.error(`build: Error reading config: '${r}'.`), process.exit(1);
-    }).finally(() => {
-        console.log(`build: Done.`)
-    })
-})
+if (typeof path === 'array')
+    path.forEach(e => {
+        build(e)
+    });
+else
+    build(path)
