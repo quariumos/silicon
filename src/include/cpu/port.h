@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CPU_PORT_H
+#define CPU_PORT_H
 
 #include <types.h>
 
@@ -17,3 +18,5 @@ void outb(u16 port, u8 data)
     :
     : "a"(data), "d"(port));
 }
+
+#endif

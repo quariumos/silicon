@@ -1,7 +1,12 @@
 
-#include <io/in/kbd.h>
 #include <io/conversion.h>
-#include <io/log.h>
+
+#include "kernel/io/out/text.c"
+#include "kernel/io/duplex/serial.c"
+
+#include "kernel/cpu/isr.c"
+
+#include <io/base/macros.h>
 
 void kbd_log(u8 data)
 {
@@ -26,13 +31,10 @@ void kmain()
 {
     remap_pic(32, 47);
     clear_idt();
-    kbd.init(kbd_log);
-    serial.init(serial.id);
+    serial.flags = COM1;
+    SERIAL_INIT(serial.flags);
     text.init(text.id);
-    set_idt_entry(13, gpf_log);
-    set_idt_entry(8, double_fault_log);
-    install_idt();
-    klog("Silicon Kernel loaded.\n", "");
+    klog("kernel loaded.\n", "");
     for (;;)
         asm("hlt");
 }

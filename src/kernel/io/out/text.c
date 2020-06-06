@@ -1,10 +1,8 @@
-#ifndef DEVICE_TEXT_H
-#define DEVICE_TEXT_H
-
 #include <types.h>
 #include <memory.h>
 #include <cpu/port.h>
-#include <io/device.h>
+#include <io/base/types.h>
+#include <io/kprintf.h>
 
 // Video memory pointer, obviously
 #define VIDEO_MEMORY 0xB8000
@@ -52,10 +50,6 @@ void move_cursor(u16 addr)
 s32 text_x = 0, text_y = 0;
 u16 text_color = DEFAULT_TEXT_COLOR;
 
-#ifdef SILICON_SERIAL_LOG
-#include <io/duplex/serial.h>
-#endif
-
 // this function accept *relative* values
 void text_move(s32 x, s32 y)
 {
@@ -69,9 +63,6 @@ void text_move(s32 x, s32 y)
     text_y += y;
     if (text_x < 0)
         text_y--, text_x = TEXT_FIELD_WIDTH-1;
-#ifdef SILICON_SERIAL_LOG
-    _raw_kprintf(serial.out_device, "y: %d, x: %d\n", text_y, text_x);
-#endif
     move_cursor((u16)text_y * 80 + (u16)text_x); // update cursor position
 }
 
@@ -112,10 +103,6 @@ void init_text(char *id)
 generic_io_device text =
     {
         .init = init_text,
-        .in_device = {
-            .flags = 1,
-            .stream = NULL},
-        .out_device = {.flags = 0, .write = text_setc},
+        .flags = 0,
+        .handler = text_setc,
         .id = "TXT"};
-
-#endif

@@ -1,9 +1,7 @@
-#ifndef DEVICE_SERIAL_H
-#define DEVICE_SERIAL_H
 
 #include <types.h>
 #include <cpu/port.h>
-#include <io/device.h>
+#include <io/base/types.h>
 
 #define COM1 0x3f8
 
@@ -24,39 +22,28 @@ typedef enum
         outb(port + 4, 0x0B); /* Enable interrupts */                 \
     }
 
+extern u8 serial_inc();
+extern void serial_outc(u8 c);
+
+generic_io_device serial = {.init = NULL,
+                            .flags = 0,
+                            .handler = serial_outc,
+                            .id = "SRL"};
+
+
 #define SERIAL_CHECK(port, state) (inb(port + 5) & state)
+#define SERIAL_PORT(port) serial.flags = port;
 
-STREAM(serial_stream)
-
-#define DEFAULT_COM_PORT COM1
-
-void serial_in()
+u8 serial_inc()
 {
-    while (SERIAL_CHECK(DEFAULT_COM_PORT, RECIEVED) == 0)
+    while (SERIAL_CHECK(serial.flags, RECIEVED) == 0)
         ;
-    serial_stream.write(inb(DEFAULT_COM_PORT));
+    return inb(serial.flags);
 }
 
 void serial_outc(u8 c)
 {
-    while (SERIAL_CHECK(DEFAULT_COM_PORT, EMPTY) == 0)
+    while (SERIAL_CHECK(serial.flags, EMPTY) == 0)
         ;
-    outb(DEFAULT_COM_PORT, c);
+    outb(serial.flags, c);
 }
-
-void init_serial(char *id)
-{
-    SERIAL_INIT(DEFAULT_COM_PORT);
-    init_serial_stream(NULL);
-}
-
-generic_io_device serial =
-    {
-        .init = init_serial,
-        .in_device = {
-            .flags = 0,
-            .stream = &serial_stream},
-        .out_device = {.flags = 0, .write = serial_outc},
-        .id = "SRL"};
-
-#endif

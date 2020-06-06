@@ -3,10 +3,10 @@
 
 #include <stdarg.h>
 #include <types.h>
-#include <io/device.h>
 #include <io/conversion.h>
+#include <io/base/types.h>
 
-void _raw_kprintf(out_io_device_t device, const char *format, ...)
+void _raw_kprintf(generic_io_device device, const char *format, ...)
 {
     va_list ap;
     va_start(ap, format);
@@ -22,26 +22,26 @@ void _raw_kprintf(out_io_device_t device, const char *format, ...)
             switch (format[++ptr])
             {
             case '%': // for escaping %
-                device.write('%');
+                device.handler('%');
                 break;
             case 's': // for strings
                 d = va_arg(ap, char *);
                 while (*d != 0)
-                    device.write(*d++);
+                    device.handler(*d++);
                 break;
             case 'd': // for integers
                 n = va_arg(ap, int);
                 itoa(n, 10, d);
                 while (*d != 0)
-                    device.write(*d++);
+                    device.handler(*d++);
                 break;
             case 'c': // for characters
-                device.write(va_arg(ap, int));
+                device.handler(va_arg(ap, int));
                 break;
             case 'x': // for hexadecimals
                 itoa(va_arg(ap, s32), 16, d);
                 while (*d != 0)
-                    device.write(*d++);
+                    device.handler(*d++);
                 break;
             default:
                 break;
@@ -49,7 +49,7 @@ void _raw_kprintf(out_io_device_t device, const char *format, ...)
             break;
 
         default:
-            device.write(format[ptr]);
+            device.handler(format[ptr]);
             break;
         }
     }
