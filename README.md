@@ -26,7 +26,7 @@ v0.1:
 - [x] Serial IO
 - [x] Fancy virtual device-based IO system
 - [ ] Keyboard driver
-- [ ] Exception handling
+- [x] Exception handling
 - [ ] Kernel, memory allocation
 
 v0.2:

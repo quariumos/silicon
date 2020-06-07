@@ -1,9 +1,9 @@
-#ifndef DEVICE_KBD_H
-#define DEVICE_KBD_H
+
 #include <cpu/port.h>
 #include <cpu/isr.h>
-#include <io/device.h>
-#include <io/log.h>
+#include <io/base/types.h>
+
+void (*kbd_handler)(u8 c);
 
 // Sample keymap (US layout), taken from a tutorial by Bran
 u8 kbdus[128] =
@@ -45,7 +45,6 @@ u8 kbdus[128] =
         0, /* F12 Key */
         0, /* All other keys are undefined */
 };
-STREAM(keyboard_stream)
 
 __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_frame *frame)
 {
@@ -55,23 +54,21 @@ __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_fram
         ; // do nothing
     else
         // Key was just pressed
-        keyboard_stream.write(kbdus[scancode]);
+        kbd_handler(kbdus[scancode]);
     eoi(1);
 }
-void init_kbd(stream_subscriber_t subscriber)
+
+void init_kbd(void(*handler)(u8 c))
 {
-    init_keyboard_stream(subscriber);
+    kbd_handler = handler;
     set_idt_entry(33, keyboard_interrupt_handler);
     pic_unmask(1);
     asm("sti");
 }
+
 generic_io_device kbd =
     {
         .init = init_kbd,
-        .in_device = {
-            .flags = 0,
-            .stream = &keyboard_stream},
-        .out_device = {.flags = 1, .write = NULL},
+        .flags = 0,
+        .handler = NULL,
         .id = "KBD"};
-
-#endif
