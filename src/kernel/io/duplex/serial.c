@@ -22,28 +22,33 @@ typedef enum
         outb(port + 4, 0x0B); /* Enable interrupts */                 \
     }
 
-extern u8 serial_inc();
+#define SERIAL_CHECK(port, state) (inb(port + 5) & state)
+
 extern void serial_outc(u8 c);
 
-generic_io_device serial = {.init = NULL,
+generic_io_device serial_out = {.init = NULL,
                             .flags = 0,
-                            .handler = serial_outc,
+                            .handler = (void*)serial_outc,
                             .id = "SRL"};
 
 
-#define SERIAL_CHECK(port, state) (inb(port + 5) & state)
-#define SERIAL_PORT(port) serial.flags = port;
+void serial_outc(u8 c)
+{
+    while (SERIAL_CHECK(serial_out.flags, EMPTY) == 0)
+        ;
+    outb(serial_out.flags, c);
+}
+
+extern u8 serial_inc();
+
+generic_io_device serial_in = {.init = NULL,
+                            .flags = 0,
+                            .handler = (void*)serial_inc,
+                            .id = "SRL"};
 
 u8 serial_inc()
 {
-    while (SERIAL_CHECK(serial.flags, RECIEVED) == 0)
+    while (SERIAL_CHECK(serial_in.flags, RECIEVED) == 0)
         ;
-    return inb(serial.flags);
-}
-
-void serial_outc(u8 c)
-{
-    while (SERIAL_CHECK(serial.flags, EMPTY) == 0)
-        ;
-    outb(serial.flags, c);
+    return inb(serial_in.flags);
 }

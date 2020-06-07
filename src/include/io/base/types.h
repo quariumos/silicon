@@ -15,7 +15,7 @@ typedef struct
 {
     void (*init)();
     u16 flags;
-    void (*handler)(u8 c);
+    void *handler;
     char id[4]; // short device identifier used by the kernel, max 3 chars
 } generic_io_device;
 

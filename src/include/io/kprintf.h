@@ -5,12 +5,15 @@
 #include <types.h>
 #include <io/conversion.h>
 #include <io/base/types.h>
+#include <io/base/macros.h>
 
 void _raw_kprintf(generic_io_device device, const char *format, ...)
 {
     va_list ap;
     va_start(ap, format);
     u32 ptr = -1;
+    HANDLER_OUT(handler);
+    handler = device.handler;
     static char *d;
     int n;
     while (format[++ptr] != 0)
@@ -22,26 +25,26 @@ void _raw_kprintf(generic_io_device device, const char *format, ...)
             switch (format[++ptr])
             {
             case '%': // for escaping %
-                device.handler('%');
+                handler('%');
                 break;
             case 's': // for strings
                 d = va_arg(ap, char *);
                 while (*d != 0)
-                    device.handler(*d++);
+                    handler(*d++);
                 break;
             case 'd': // for integers
                 n = va_arg(ap, int);
                 itoa(n, 10, d);
                 while (*d != 0)
-                    device.handler(*d++);
+                    handler(*d++);
                 break;
             case 'c': // for characters
-                device.handler(va_arg(ap, int));
+                handler(va_arg(ap, int));
                 break;
             case 'x': // for hexadecimals
                 itoa(va_arg(ap, s32), 16, d);
                 while (*d != 0)
-                    device.handler(*d++);
+                    handler(*d++);
                 break;
             default:
                 break;
@@ -49,7 +52,7 @@ void _raw_kprintf(generic_io_device device, const char *format, ...)
             break;
 
         default:
-            device.handler(format[ptr]);
+            handler(format[ptr]);
             break;
         }
     }

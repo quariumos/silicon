@@ -104,5 +104,5 @@ generic_io_device text =
     {
         .init = init_text,
         .flags = 0,
-        .handler = text_setc,
+        .handler = (void*)text_setc,
         .id = "TXT"};

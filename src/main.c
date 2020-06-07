@@ -31,8 +31,9 @@ void kmain()
 {
     remap_pic(32, 47);
     clear_idt();
-    serial.flags = COM1;
-    SERIAL_INIT(serial.flags);
+    serial_out.flags = COM1;
+    serial_in.flags = COM1;
+    SERIAL_INIT(COM1);
     text.init(text.id);
     klog("kernel loaded.\n", "");
     for (;;)
