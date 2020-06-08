@@ -1,5 +1,4 @@
 .vscode
-*.tmp
 *.iso
-scripts/node_modules
 obj/*
+iso/boot/*.elf
