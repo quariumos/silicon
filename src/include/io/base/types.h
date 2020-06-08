@@ -13,7 +13,7 @@
 
 typedef struct
 {
-    void (*init)();
+    void (*init)(u8 flags);
     u16 flags;
     void *handler;
     char id[4]; // short device identifier used by the kernel, max 3 chars

@@ -28,4 +28,9 @@ struct interrupt_frame
 #define PIC2_COMMAND PIC2
 #define PIC2_DATA (PIC2 + 1)
 typedef void (*isr_handler_t)(struct interrupt_frame *);
+
+extern void eoi(u16 n);
+extern void set_idt_entry(int vector, isr_handler_t handler);
+extern void pic_mask(unsigned char n);
+extern void pic_unmask(unsigned char n);
 #endif
