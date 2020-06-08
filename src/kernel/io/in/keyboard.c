@@ -58,17 +58,16 @@ __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_fram
     eoi(1);
 }
 
-void init_kbd(void(*handler)(u8 c))
+void init_keyboard(u8 flags)
 {
-    kbd_handler = handler;
     set_idt_entry(33, keyboard_interrupt_handler);
     pic_unmask(1);
     asm("sti");
 }
 
-generic_io_device kbd =
+generic_io_device keyboard =
     {
-        .init = init_kbd,
+        .init = init_keyboard,
         .flags = 0,
         .handler = NULL,
         .id = "KBD"};

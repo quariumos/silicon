@@ -88,7 +88,7 @@ void text_setc(u8 c)
     *where = c | (text_color << 8); // place character
 }
 
-void init_text(char *id)
+void init_text(u8 flags)
 {
     u8 cursor_start = 0, cursor_end = 15;
     // enable the cursor

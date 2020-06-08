@@ -4,6 +4,8 @@
 #include "kernel/io/out/text.c"
 #include "kernel/io/duplex/serial.c"
 
+#include "kernel/io/in/keyboard.c"
+
 #include "kernel/cpu/isr.c"
 
 #include <io/base/macros.h>
@@ -29,12 +31,17 @@ void double_fault_log(struct interrupt_frame *frame)
 
 void kmain()
 {
+    // ISR handling setup
     remap_pic(32, 47);
     clear_idt();
+    // IO initialization
     serial_out.flags = COM1;
     serial_in.flags = COM1;
     SERIAL_INIT(COM1);
-    text.init(text.id);
+    INIT(text, 0);
+    INIT(keyboard, 0);
+    // Continue ISR handling setup
+    install_idt();
     klog("kernel loaded.\n", "");
     for (;;)
         asm("hlt");
