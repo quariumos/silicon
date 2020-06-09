@@ -10,10 +10,12 @@
 
 #include <io/base/macros.h>
 
+#ifdef LOG_MICRO_EVENTS
 void kbd_log(u8 data)
 {
-    klog("%c\n", data);
+    klog(ANSI_COLOR_CYAN"key hit: %c\n" ANSI_COLOR_RESET, data);
 }
+#endif 
 
 void gpf_log(struct interrupt_frame *frame)
 {
@@ -40,6 +42,9 @@ void kmain()
     SERIAL_INIT(COM1);
     INIT(text, 0);
     INIT(keyboard, 0);
+    #ifdef LOG_MICRO_EVENTS
+    keyboard.handler = kbd_log;
+    #endif
     // Continue ISR handling setup
     install_idt();
     klog("kernel loaded.\n", "");

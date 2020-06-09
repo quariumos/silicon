@@ -3,8 +3,6 @@
 #include <cpu/isr.h>
 #include <io/base/types.h>
 
-void (*kbd_handler)(u8 c);
-
 // Sample keymap (US layout), taken from a tutorial by Bran
 u8 kbdus[128] =
     {
@@ -46,15 +44,21 @@ u8 kbdus[128] =
         0, /* All other keys are undefined */
 };
 
+#include <io/base/macros.h>
+
+extern generic_io_device keyboard;
+
 __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_frame *frame)
 {
+    HANDLER_IN(keyboard_in);
+    keyboard_in =  keyboard.handler;
     u8 scancode = inb(0x60);
     if ((scancode & 128) == 128)
         // Key was just released
         ; // do nothing
     else
         // Key was just pressed
-        kbd_handler(kbdus[scancode]);
+        keyboard_in(kbdus[scancode]);
     eoi(1);
 }
 

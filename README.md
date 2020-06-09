@@ -25,7 +25,7 @@ v0.1:
 - [x] Proper IDT
 - [x] Serial IO
 - [x] Fancy virtual device-based IO system
-- [ ] Keyboard driver
+- [x] PS/2 Keyboard input
 - [x] Exception handling
 - [ ] Kernel, memory allocation
 
