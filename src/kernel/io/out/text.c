@@ -50,7 +50,7 @@ void move_cursor(u16 addr)
 s32 text_x = 0, text_y = 0;
 u16 text_color = DEFAULT_TEXT_COLOR;
 
-// this function accept *relative* values
+// this function accepts *relative* values
 void text_move(s32 x, s32 y)
 {
     if (text_x == TEXT_FIELD_WIDTH)
@@ -68,8 +68,7 @@ void text_move(s32 x, s32 y)
 
 void text_setc(u8 c)
 {
-    u16 addr = text_y * 80 + text_x;
-    volatile u16 *where = (volatile u16 *)0xB8000 + addr;
+    volatile u16 *where = (volatile u16 *)0xB8000 + (text_y * 80 + text_x);
     switch (c)
     {
     case '\n':
@@ -79,6 +78,7 @@ void text_setc(u8 c)
     case '\b':
         text_move(-1, 0); // move one character back
         c = ' ';
+    where = (volatile u16 *)0xB8000 + (text_y * 80 + text_x);
         break;
     default:
         // move one character further
