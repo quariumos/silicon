@@ -9,18 +9,18 @@ _EF= -no-reboot -m 2M -serial stdio
 
 DIST=dist
 
+kernel.iso: obj/kernel.elf
+	cp $< iso/boot
+	grub-mkrescue -d /usr/lib/grub/i386-pc -o $@ iso
+
 run: clean kernel.iso
 	qemu-system-${ARCH} ${_EF} -cdrom kernel.iso
 
 sym:
-	nm -g obj/kernel.elf > info/kernel.sym
+	nm -g obj/kernel.elf | grep T > info/kernel.sym
 
 debug: clean kernel.iso
 	qemu-system-${ARCH} ${_EF} -s -S -cdrom kernel.iso & ARCH=${ARCH} gdb --batch -x info/debug.gdb
-
-kernel.iso: obj/kernel.elf
-	cp $< iso/boot
-	grub-mkrescue -d /usr/lib/grub/i386-pc -o $@ iso
 
 obj/kernel.elf: obj/multiboot.o obj/start.o obj/kernel.o
 	ld -m elf_i386 -T info/linker.ld -o $@ $^
