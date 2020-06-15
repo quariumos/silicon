@@ -13,7 +13,7 @@ run: clean kernel.iso
 	qemu-system-${ARCH} ${_EF} -cdrom kernel.iso
 
 sym:
-	objdump -dj .text kernel.elf > info/kernel.sym
+	nm -g obj/kernel.elf > info/kernel.sym
 
 debug: clean kernel.iso
 	qemu-system-${ARCH} ${_EF} -s -S -cdrom kernel.iso & ARCH=${ARCH} gdb --batch -x info/debug.gdb
