@@ -1,32 +1,31 @@
-00100e20 T clear_idt
-00101020 T double_fault_log
-00100b10 T eoi
-00100f50 T gpf_log
-001003a0 T inb
-00100b60 T init_keyboard
-00100900 T init_text
-00100e70 T install_idt
-00100080 T itoa
-00100eb0 T kbd_log
-00100aa0 T keyboard_interrupt_handler
-001010d0 T kmain
-00100210 T memcmp
-00100350 T memcpy
-00100170 T memmove
-001002b0 T memset
-00100300 T memsetw
-001006b0 T move_cursor
-00100070 T noop
-001003c0 T outb
-00100c90 T pic_mask
-00100c10 T pic_unmask
-001003f0 T _raw_kprintf
-00100d10 T remap_pic
-00100a50 T serial_inc
-00100a00 T serial_outc
-00100ba0 T set_idt_entry
-0010003e T _start
-00100e10 T stub_isr_handler
-00100620 T text_fill
-00100730 T text_move
-00100810 T text_setc
+00000db0: clear_idt
+00000fb0: double_fault_log
+00000aa0: eoi
+00000ee0: gpf_log
+00000330: inb
+00000af0: init_keyboard
+00000890: init_text
+00000e00: install_idt
+00000010: itoa
+00000e40: kbd_log
+00000a30: keyboard_interrupt_handler
+00001060: kmain
+000001a0: memcmp
+000002e0: memcpy
+00000100: memmove
+00000240: memset
+00000290: memsetw
+00000640: move_cursor
+00000000: noop
+00000350: outb
+00000c20: pic_mask
+00000ba0: pic_unmask
+00000380: _raw_kprintf
+00000ca0: remap_pic
+000009e0: serial_inc
+00000990: serial_outc
+00000b30: set_idt_entry
+00000da0: stub_isr_handler
+000005b0: text_fill
+000006c0: text_move
+000007a0: text_setc

@@ -13,7 +13,7 @@ QuariumOS should be located in another repository somewhere in this organization
 Build requirements:
 1. grub-mkrescue and xorisso: `xorriso` on Ubuntu, `libisoburn` on Clear Linux
 2. clang (theoretically a gcc-based cross compiler could work too), ld and nasm
-3. nm, grep for symbol extraction (optional, set PARSE_SYMBOLS to 0 disable)
+3. nm, grep and sed for symbol extraction (optional, set PARSE_SYMBOLS to 0 disable)
 
 ## Progress:
 v0.1:
