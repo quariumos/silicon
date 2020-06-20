@@ -1,54 +1,34 @@
-
-#include <io/conversion.h>
-
 #include "kernel/io/out/text.c"
-#include "kernel/io/duplex/serial.c"
-
 #include "kernel/io/in/keyboard.c"
+#include "kernel/io/duplex/serial.c"
 
 #include "kernel/cpu/isr.c"
 
+#ifdef SHOULD_LOG
 #include <io/base/macros.h>
-
-#ifdef LOG_MICRO_EVENTS
-void kbd_log(u8 data)
-{
-    klog(ANSI_COLOR_CYAN"key hit: %c\n" ANSI_COLOR_RESET, data);
-    text_setc(data);
-}
-#endif 
-
-void gpf_log(struct interrupt_frame *frame)
-{
-    // Just wait, it prints too fast otherwise
-    WAIT(100000000)
-    klog("Error: General Protection fault, %s related, at 0x%x\n", frame->ss == 1 ? "seg." : "not seg.", frame->ip);
-}
-
-void double_fault_log(struct interrupt_frame *frame)
-{
-    // Just wait, it prints too fast otherwise
-    WAIT(100000000)
-    klog("Error: Double fault\n", "");
-}
+#include "logging.c"
+#endif
 
 void kmain()
 {
     // ISR handling setup
     remap_pic(32, 47);
     clear_idt();
-    // IO initialization
-    serial_out.flags = COM1;
-    serial_in.flags = COM1;
+// IO initialization
+#ifdef SHOULD_LOG
     SERIAL_INIT(COM1);
+    SERIAL_SET(serial_in, serial_out, COM1);
+#ifdef LOG_MICRO_EVENTS
+    keyboard.handler = kbd_log;
+#endif
+#endif
     INIT(text, 0);
     INIT(keyboard, 0);
-    #ifdef LOG_MICRO_EVENTS
-    keyboard.handler = kbd_log;
-    #endif
     // Continue ISR handling setup
     install_idt();
+#ifdef SHOULD_LOG
     klog("kernel loaded.\n", "");
+#endif
     for (;;)
         asm("hlt");
 }

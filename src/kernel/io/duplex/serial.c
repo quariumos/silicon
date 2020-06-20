@@ -27,10 +27,9 @@ typedef enum
 extern void serial_outc(u8 c);
 
 generic_io_device serial_out = {.init = NULL,
-                            .flags = 0,
-                            .handler = (void*)serial_outc,
-                            .id = "SRL"};
-
+                                .flags = 0,
+                                .handler = (void *)serial_outc,
+                                .id = "SRL"};
 
 void serial_outc(u8 c)
 {
@@ -42,9 +41,9 @@ void serial_outc(u8 c)
 extern u8 serial_inc();
 
 generic_io_device serial_in = {.init = NULL,
-                            .flags = 0,
-                            .handler = (void*)serial_inc,
-                            .id = "SRL"};
+                               .flags = 0,
+                               .handler = (void *)serial_inc,
+                               .id = "SRL"};
 
 u8 serial_inc()
 {
@@ -52,3 +51,7 @@ u8 serial_inc()
         ;
     return inb(serial_in.flags);
 }
+
+#define SERIAL_SET(in, out, port) \
+    out.flags = port;             \
+    in.flags = port;

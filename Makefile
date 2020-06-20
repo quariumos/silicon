@@ -2,7 +2,7 @@ _CC=clang
 ARCH?=i386
 _CLANG_TRIPLE=${ARCH}-pc-none-bin
 
-FLAGS?=-DLOG_MICRO_EVENTS
+FLAGS?=-DSHOULD_LOG -DLOG_MICRO_EVENTS -DLOG_STACK_ON_GPF
 
 _CF= -I src/include -target ${_CLANG_TRIPLE} -DARCH=${ARCH} -ffreestanding -g ${FLAGS}
 _EF= -no-reboot -m 2M -serial stdio
