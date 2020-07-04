@@ -4,13 +4,18 @@
 
 #include "kernel/cpu/isr.c"
 
+#include <multiboot2.h>
+
 #ifdef SHOULD_LOG
 #include <io/base/macros.h>
 #include "logging.c"
 #endif
 
-void kmain()
+void kmain(unsigned long magic, unsigned long addr)
 {
+    struct multiboot_tag *tag;
+    unsigned size;
+
     // ISR handling setup
     remap_pic(32, 47);
     clear_idt();
@@ -29,6 +34,12 @@ void kmain()
 #ifdef SHOULD_LOG
     klog("kernel loaded.\n", "");
 #endif
+
+    // Multiboot 2 checks
+    if (magic != MULTIBOOT2_BOOTLOADER_MAGIC)
+        klog("invalid bootloader magic: 0x%x\n", (unsigned)magic);
+    if (addr & 7)
+        klog("invalid mbi: 0x%x\n", addr);
     for (;;)
         asm("hlt");
 }

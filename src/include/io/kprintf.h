@@ -42,7 +42,8 @@ void _raw_kprintf(generic_io_device device, const char *format, ...)
                 handler(va_arg(ap, int));
                 break;
             case 'x': // for hexadecimals
-                itoa(va_arg(ap, s32), 16, d);
+                n = va_arg(ap, s32);
+                itoa(n, 16, d);
                 while (*d != 0)
                     handler(*d++);
                 break;

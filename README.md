@@ -1,3 +1,6 @@
+> This branch is qt-sergal's lazy attempt to minimize the amount of data copying (or get rid of it all-together)
+> It will be worked on in parallel with `master`
+
 ### Warning
 If the resulting .iso file fails to run properly, try compiling it on Ubuntu,
 for an unknown reason Clang-10 produces faulty code on other distributions of Linux (particularly Fedora),
