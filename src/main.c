@@ -1,8 +1,9 @@
+
+#include "kernel/cpu/isr.c"
+
 #include "kernel/io/out/text.c"
 #include "kernel/io/in/keyboard.c"
 #include "kernel/io/duplex/serial.c"
-
-#include "kernel/cpu/isr.c"
 
 #ifdef SHOULD_LOG
 #include <io/base/macros.h>

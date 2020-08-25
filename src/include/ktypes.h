@@ -1,5 +1,5 @@
-#ifndef DEF_H
-#define DEF_H
+#ifndef KTYPES_H
+#define KTYPES_H
 
 typedef unsigned long u64;
 typedef long s64;

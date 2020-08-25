@@ -2,9 +2,7 @@
 #define KPRINTF_H
 
 #include <stdarg.h>
-#include <types.h>
-#include <io/conversion.h>
-#include <io/base/types.h>
+#include <kstdlib.h>
 #include <io/base/macros.h>
 
 void _raw_kprintf(generic_io_device device, const char *format, ...)

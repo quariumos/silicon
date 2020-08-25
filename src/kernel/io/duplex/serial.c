@@ -1,7 +1,5 @@
 
-#include <types.h>
-#include <cpu/port.h>
-#include <io/base/types.h>
+#include <kstdlib.h>
 
 #define COM1 0x3f8
 

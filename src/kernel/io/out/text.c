@@ -1,7 +1,4 @@
-#include <types.h>
-#include <memory.h>
-#include <cpu/port.h>
-#include <io/base/types.h>
+#include <kstdlib.h>
 #include <io/kprintf.h>
 
 // Video memory pointer, obviously

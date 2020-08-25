@@ -1,5 +1,4 @@
-#include <types.h>
-#include <cpu/port.h>
+#include <kstdlib.h>
 #include <cpu/isr.h>
 
 void eoi(u16 n)

@@ -1,7 +1,5 @@
 
-#include <cpu/port.h>
-#include <cpu/isr.h>
-#include <io/base/types.h>
+#include <kstdlib.h>
 
 // Sample keymap (US layout), taken from a tutorial by Bran
 u8 kbdus[128] =

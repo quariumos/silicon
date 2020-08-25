@@ -1,6 +1,5 @@
 #ifndef CPU_ISR_H
 #define CPU_ISR_H
-#include <types.h>
 // IDT part
 struct idt_entry
 {
