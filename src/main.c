@@ -42,9 +42,6 @@ void kmain()
 #ifdef SHOULD_LOG
     klog("kernel loaded.\n", "");
 #endif
-    _k_820_memory_range _memory_range;
-    int s = _get_memory_k_820(_k_820_continuation, &_memory_range);
-    klog("%d", s);
     for (;;)
         asm("hlt");
 }

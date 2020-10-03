@@ -1,11 +1,12 @@
 
-#ifdef LOG_MICRO_EVENTS
+#include <kstdlib.h>
+#include <cpu/isr.h>
+
 void kbd_log(u8 data)
 {
     klog(ANSI_COLOR_CYAN"key hit: %c\n" ANSI_COLOR_RESET, data);
     text_setc(data);
 }
-#endif
 
 void gpf_log(struct interrupt_frame *frame)
 {
