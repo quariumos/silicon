@@ -1,3 +1,4 @@
 .vscode
 *.iso
 iso/boot/*.elf
+obj
