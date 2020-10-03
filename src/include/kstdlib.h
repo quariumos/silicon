@@ -4,6 +4,7 @@
 #include <cpu/base/ports.h>
 #include <io/base/types.h>
 
+
 void *memmove(u8 *dst, u8 *src, u32 size)
 {
     if (dst < src)

@@ -1,4 +1,4 @@
-_CC=clang
+_CC=ccache clang
 ARCH?=i386
 _CLANG_TRIPLE=${ARCH}-pc-none-bin
 
@@ -21,10 +21,10 @@ obj/ksym.o:
 	nm -g obj/kernel.o | grep T | sed -e 's/ T /: /g' > info/kernel.sym
 	ld -m elf_i386 -r -b binary -o $@ info/kernel.sym
 
-obj/kernel.elf: obj/multiboot.o obj/start.o obj/kernel.o obj/ksym.o
+obj/kernel.elf: obj/multiboot.o obj/start.o obj/kernel_asm.o obj/kernel.o obj/ksym.o
 	ld -m elf_i386 -T info/linker.ld -o $@ $^
 else
-obj/kernel.elf: obj/multiboot.o obj/start.o obj/kernel.o
+obj/kernel.elf: obj/multiboot.o obj/start.o obj/kernel_asm.o obj/kernel.o
 	ld -m elf_i386 -T info/linker.ld -o $@ $^
 endif
 
@@ -33,6 +33,9 @@ debug: clean kernel.iso
 
 obj/kernel.o:
 	${_CC} -c -o $@ ${_CF} src/main.c
+
+obj/kernel_asm.o:
+	nasm -f elf32 src/kernel/*.s -o $@
 
 obj/start.o:
 	nasm -f elf32 src/start.s -o $@
