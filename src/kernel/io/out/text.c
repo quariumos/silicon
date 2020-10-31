@@ -1,6 +1,10 @@
 #include <kstdlib.h>
 #include <io/kprintf.h>
 
+
+// TODO A huge rewrite is needed
+
+
 // Video memory pointer, obviously
 #define VIDEO_MEMORY 0xB8000
 #define TEXT_FIELD_WIDTH 80
@@ -54,12 +58,12 @@ void text_move(s32 x, s32 y)
         text_x = 0, text_y++; // move to new line, obviously
     if (x < 0 && text_x == 0 && text_y == 0)
         x = 0;
-    if(y > 0)
+    if (y > 0)
         x = -text_x; // reset x if y is bigger than 0 (moving to next line)
     text_x += x;
     text_y += y;
     if (text_x < 0)
-        text_y--, text_x = TEXT_FIELD_WIDTH-1;
+        text_y--, text_x = TEXT_FIELD_WIDTH - 1;
     move_cursor((u16)text_y * 80 + (u16)text_x); // update cursor position
 }
 
@@ -75,7 +79,6 @@ void text_setc(u8 c)
     case '\b':
         text_move(-1, 0); // move one character back
         c = ' ';
-    where = (volatile u16 *)0xB8000 + (text_y * 80 + text_x);
         break;
     default:
         // move one character further
@@ -101,5 +104,5 @@ generic_io_device text =
     {
         .init = init_text,
         .flags = 0,
-        .handler = (void*)text_setc,
+        .handler = (void *)text_setc,
         .id = "TXT"};
