@@ -16,17 +16,12 @@ kernel.iso: obj/kernel.elf
 run: clean kernel.iso
 	qemu-system-${ARCH} ${_EF} -cdrom kernel.iso
 
-ifeq ($(PARSE_SYMBOLS),1)
 obj/ksym.o:
 	nm -g obj/kernel.o | grep T | sed -e 's/ T /: /g' > info/kernel.sym
 	ld -m elf_i386 -r -b binary -o $@ info/kernel.sym
 
 obj/kernel.elf: obj/multiboot.o obj/start.o obj/kernel_asm.o obj/kernel.o obj/ksym.o
 	ld -m elf_i386 -T info/linker.ld -o $@ $^
-else
-obj/kernel.elf: obj/multiboot.o obj/start.o obj/kernel_asm.o obj/kernel.o
-	ld -m elf_i386 -T info/linker.ld -o $@ $^
-endif
 
 debug: clean kernel.iso
 	qemu-system-${ARCH} ${_EF} -s -S -cdrom kernel.iso & ARCH=${ARCH} gdb --batch -x info/debug.gdb
