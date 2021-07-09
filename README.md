@@ -1,8 +1,3 @@
-### Warning
-If the resulting .iso file fails to run properly, try compiling it on Ubuntu,
-for an unknown reason Clang-10 produces faulty code on other distributions of Linux (particularly Fedora),
-you can also try using older versions of Clang.
-
 # Silicon
 This repository contains all the code for the QuariumOS kernel, Silicon.
 QuariumOS should be located in another repository somewhere in this organization, but it will likely be so only when the kernel is in it's alpha stage.
@@ -18,7 +13,7 @@ Build requirements:
 2. **clang** & **ccache** (theoretically a gcc-based cross compiler could work too)
 3. **ld**
 4. **nasm**
-5. **nm**, **grep** & **sed** for symbol extraction (optional, set PARSE_SYMBOLS to 0 disable)
+5. **nm**, **grep** & **sed** for symbol extraction
 
 ## Progress:
 v0.1:

@@ -1,4 +1,7 @@
+# VS Code configuration
 .vscode
-*.iso
+
+# Temporary files and artifacts
 iso/boot/*.elf
 obj/*
+*.iso
