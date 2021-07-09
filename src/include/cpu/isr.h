@@ -29,7 +29,7 @@ struct interrupt_frame
 typedef void (*isr_handler_t)(struct interrupt_frame *);
 
 extern void eoi(u16 n);
-extern void set_idt_entry(int vector, isr_handler_t handler);
+extern void set_idt_entry(struct idt_entry idt[256], int vector, isr_handler_t handler);
 extern void pic_mask(unsigned char n);
 extern void pic_unmask(unsigned char n);
 #endif

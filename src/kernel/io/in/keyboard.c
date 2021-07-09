@@ -62,7 +62,7 @@ __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_fram
 
 void init_keyboard(u8 flags)
 {
-    set_idt_entry(33, keyboard_interrupt_handler);
+    set_idt_entry(idt, 33, keyboard_interrupt_handler);
     pic_unmask(1);
     asm("sti");
 }

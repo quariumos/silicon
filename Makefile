@@ -3,7 +3,7 @@ _CC=ccache clang
 ARCH?=i386
 _CLANG_TRIPLE=${ARCH}-pc-none-bin
 
-FLAGS?=-DSHOULD_LOG -DLOG_MICRO_EVENTS -DLOG_STACK_ON_GPF
+FLAGS?=-DSHOULD_LOG -DLOG_MICRO_EVENTS
 
 _CF= -I src/include -target ${_CLANG_TRIPLE} -DARCH=${ARCH} -ffreestanding -g ${FLAGS}
 _EF= -no-reboot -m 2M -serial stdio
