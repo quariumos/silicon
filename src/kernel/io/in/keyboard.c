@@ -49,7 +49,7 @@ extern generic_io_device keyboard;
 __attribute__((interrupt)) void keyboard_interrupt_handler(struct interrupt_frame *frame)
 {
     HANDLER_IN(keyboard_in);
-    keyboard_in =  keyboard.handler;
+    keyboard_in = keyboard.handler;
     u8 scancode = inb(0x60);
     if ((scancode & 128) == 128)
         // Key was just released
