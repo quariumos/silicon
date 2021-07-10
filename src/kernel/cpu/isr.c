@@ -54,11 +54,7 @@ void remap_pic(u16 start_offset, u16 end_offset)
     outb(0xA1, 0x0);
 }
 
-
-struct idt_entry idt[IDT_SIZE];
-
-
-void set_idt_entry(int vector, isr_handler_t handler)
+void set_idt_entry(struct idt_entry idt[256], int vector, isr_handler_t handler)
 {
     u64 handler_address = (u64)handler;
     idt[vector].offset_lowerbits = handler_address & 0xffff;
@@ -74,14 +70,16 @@ void stub_isr_handler(struct interrupt_frame*frame)
 }
 
 // This has to be called *before* setting entries!
-void clear_idt()
+void clear_idt(struct idt_entry idt[256])
 {
     for (u32 i = 0; i < 256; i++)
-        set_idt_entry(i, stub_isr_handler);
+        set_idt_entry(idt, i, stub_isr_handler);
 }
 
-void install_idt()
+void mount_idt(struct idt_entry idt[256])
 {
+    clear_idt(idt);
+
     u64 idt_ptr[2];
     u64 idt_address = (u64)idt;
     idt_ptr[0] = (sizeof(struct idt_entry) * 256) + ((idt_address & 0xffff) << 16);
